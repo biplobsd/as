@@ -15,7 +15,7 @@
 <div
   class="w-72 h-full mt-4 mx-3 px-1 items-center overflow-hidden justify-between flex flex-col gap-2 tracking-wider"
 >
-  <div>
+  <div class="w-full">
     <Header />
     <Main />
   </div>
