@@ -1,7 +1,7 @@
 {
-  "name": "Youtube Subscriptions Transfer",
-  "description": "Transferring subscriptions from one YouTube account to another",
-  "version": "1.4",
+  "name": "Addition and Subscription",
+  "description": "Practice simple addition and subtraction equations",
+  "version": "1.0",
   "manifest_version": 3,
   "icons": {
     "16": "src/assets/icons/icon16.png",
@@ -9,12 +9,6 @@
     "48": "src/assets/icons/icon48.png",
     "128": "src/assets/icons/icon128.png"
   },
-  "content_scripts": [
-    {
-      "matches": ["https://www.youtube.com/*"],
-      "js": ["src/content/index.ts"]
-    }
-  ],
   "background": {
     "service_worker": "src/background/index.ts"
   },
@@ -31,5 +25,5 @@
       "128": "src/assets/icons/icon128.png"
     }
   },
-  "permissions": ["tabs", "identity", "storage"]
+  "permissions": ["identity", "storage"]
 }

@@ -12,31 +12,4 @@ export const UserSchema = z.object({
   sub: z.string().optional(),
 });
 
-export const SubscriptionsRawSchema = z.object({
-  nextPageToken: z.string().optional(),
-  items: z
-    .object({
-      id: z.string(),
-      snippet: z.object({
-        title: z.string(),
-        resourceId: z.object({
-          channelId: z.string(),
-        }),
-      }),
-    })
-    .array(),
-});
-
-export const SubscriptionsListSchema = z
-  .object({
-    id: z.string(),
-    channelId: z.string(),
-    title: z.string(),
-  })
-  .array()
-  .default([]);
-
-export const channelPathsSchema = z.string().array().default([]);
-
 export type User = z.infer<typeof UserSchema>;
-export type SubscriptionsList = z.infer<typeof SubscriptionsListSchema>;

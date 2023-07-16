@@ -1,23 +1,13 @@
 import { delay } from "./helper";
 import log from "./logger";
-import { XPathModelSchema } from "./xpaths";
 import { z } from "zod";
 
 const StatusCodeSchema = z.enum([
   "loading",
-  "collecting",
-  "subscribe",
-  "subscribeSuccessful",
-  "unsubscribe",
-  "unsubscribeSuccessful",
-  "changePage",
   "error",
   "stop",
   "ready",
   "accept",
-  "xpath",
-  "channelIDs",
-  "contentScriptDestroy",
   "message",
   "authToken",
   "authTokenSuccessful",
@@ -30,27 +20,12 @@ const StatusSchema = z.object({
 
 export const runtimeMessageSchema = z.discriminatedUnion("type", [
   z.object({
-    type: z.literal("dataOption"),
-    status: StatusSchema,
-    channelPaths: z.string().array(),
-  }),
-  z.object({
     type: z.literal("dataOptionAuthToken"),
     status: StatusSchema,
     authToken: z.string(),
   }),
   z.object({
-    type: z.literal("dataContent"),
-    status: StatusSchema,
-    xpathValues: XPathModelSchema,
-  }),
-  z.object({
-    type: z.enum([
-      "status",
-      "statusOption",
-      "statusContent",
-      "statusBackground",
-    ]),
+    type: z.enum(["status", "statusOption", "statusBackground"]),
     status: StatusSchema,
   }),
 ]);
