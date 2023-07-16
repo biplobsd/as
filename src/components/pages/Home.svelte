@@ -1,9 +1,10 @@
 <script lang="ts">
   import "src/options/styles.css";
+  import Status from "../home/Status.svelte";
+  import Action from "../home/Action.svelte";
 </script>
 
-<div
-  class="text-justify space-y-2 justify-center flex flex-col items-center w-full h-36"
->
-  <div>Home page</div>
+<div>
+  <Status />
+  <Action />
 </div>
