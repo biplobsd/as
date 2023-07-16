@@ -1,1 +1,1 @@
-export type TabName = "Home" | "Settings" | "About";
+export type TabName = "Home" | "Leaderboard" | "Settings" | "About";

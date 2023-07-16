@@ -4,41 +4,33 @@
   import About from "src/components/pages/About.svelte";
   import type { TabName } from "../utils/types";
   import { slide, blur } from "svelte/transition";
+  import TabButton from "./Tab_Button.svelte";
+  import Leaderboard from "./pages/Leaderboard.svelte";
 
   let tabName: TabName = "Home";
 </script>
 
 <main>
   <div class="tabs w-full flex items-stretch">
-    <button
-      on:click={() => (tabName = "Home")}
-      class="tab tab-lifted w-full flex-1 {tabName === 'Home' && 'tab-active'}"
-      >Home
-    </button>
-    <button
-      on:click={() => (tabName = "Settings")}
-      class="tab tab-lifted w-full flex-1 {tabName === 'Settings' &&
-        'tab-active'}"
-      >Settings
-    </button>
-    <button
-      on:click={() => (tabName = "About")}
-      class="tab tab-lifted w-full flex-1 {tabName === 'About' && 'tab-active'}"
-      >About
-    </button>
+    <TabButton bind:tabName text="Home" />
+    <TabButton bind:tabName text="Leaderboard" />
+    <TabButton bind:tabName text="Settings" />
+    <TabButton bind:tabName text="About" />
   </div>
   <div class="my-2 w-full">
     {#if tabName === "Home"}
       <div in:blur out:slide>
         <Home />
       </div>
-    {/if}
-    {#if tabName === "Settings"}
+    {:else if tabName === "Leaderboard"}
+      <div in:blur out:slide>
+        <Leaderboard />
+      </div>
+    {:else if tabName === "Settings"}
       <div in:blur out:slide>
         <Settings />
       </div>
-    {/if}
-    {#if tabName === "About"}
+    {:else if tabName === "About"}
       <div in:blur out:slide>
         <About />
       </div>
