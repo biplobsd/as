@@ -1,0 +1,26 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["manifest.json"],
+      "url": "https://json.schemastore.org/chrome-manifest.json"
+    }
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "cSpell.words": [
+    "Biplob",
+    "changepage",
+    "chromiumapp",
+    "crxjs",
+    "daisyui",
+    "EXPENDEDABLE",
+    "nocheck",
+    "pino",
+    "rawcwe",
+    "smartimation",
+    "tailwindcss",
+    "Typecheck",
+    "UNSUB",
+    "webext",
+    "xpaths"
+  ]
+}
