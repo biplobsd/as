@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { timeWritable } from "src/utils/storage";
   import ToggleButton from "../setting/Toggle_Button.svelte";
-  import Timeout from "../setting/Timeout_Setting.svelte";
+  import NumberRange from "../setting/number_range/Number_Range.svelte";
+  import Timeout from "../setting/timeout/Timeout_Setting.svelte";
 </script>
 
 <div class="space-y-2">
@@ -15,15 +15,7 @@
     </div>
   </div>
   <Timeout />
-  <div>
-    <div class="font-bold text-sm mb-1">Number Range</div>
-    <div class="join w-full flex">
-      <ToggleButton text="5" />
-      <ToggleButton text="20" />
-      <ToggleButton text="100" />
-    </div>
-  </div>
-
+  <NumberRange />
   <div>
     <div class="font-bold text-sm mb-1">Only (+ or -)</div>
     <div class="join w-full flex">

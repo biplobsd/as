@@ -9,6 +9,6 @@
   on:click={onClick}
   class="join-item btn btn-sm flex-1 normal-case text-base-content/50 checked:!btn-success active:btn-success"
   type="radio"
-  name="options"
+  name={text}
   aria-label={text}
 />

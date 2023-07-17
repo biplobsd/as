@@ -1,7 +1,8 @@
 <script lang="ts">
   import { timeWritable } from "src/utils/storage";
-  import ToggleButton from "./Toggle_Button.svelte";
+
   import { onMount } from "svelte";
+  import ToggleButton from "../Toggle_Button.svelte";
 
   export let timeout: number;
   let storeTimeout: number;

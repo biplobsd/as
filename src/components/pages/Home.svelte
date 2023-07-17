@@ -7,15 +7,19 @@
   import type { Sign } from "src/utils/types";
   import { onMount } from "svelte";
   import { blur } from "svelte/transition";
-  import { timeWritable } from "src/utils/storage";
+  import {
+    numberPointWritable,
+    numberRangeWritable,
+    storeIncreaseNumberAfterWritable,
+    timeWritable,
+  } from "src/utils/storage";
   import { get } from "svelte/store";
+  import { increaseNumberAfterWritable } from "src/utils/writable";
 
   let stop: boolean = false;
   let isCountDowning: boolean = false;
   let timeout: number;
   let sign: Sign = "+";
-  let min: number = 0;
-  let max: number = 5;
   let currentQuestion: QuestionPack | null = null;
 
   $: {
@@ -43,6 +47,7 @@
   }
 
   function questionInfinity(): QuestionPack {
+    const { min, max } = getMinMax();
     const number1 = randomIntFromInterval(min, max);
     const number2 = randomIntFromInterval(min, max);
     const questionString = number1 + sign + number2;
@@ -85,8 +90,29 @@
     countdown();
   }
 
+  function getMinMax() {
+    const numberRange = get(numberRangeWritable);
+    const numberPoint = get(numberPointWritable);
+    const min = numberPoint;
+    const max = numberPoint + numberRange;
+    return { min, max };
+  }
+
+  function resetINA() {
+    increaseNumberAfterWritable.set(get(storeIncreaseNumberAfterWritable));
+  }
+
   onMount(() => {
     start();
+    resetINA();
+
+    increaseNumberAfterWritable.subscribe((x) => {
+      if (x <= 0) {
+        const { max } = getMinMax();
+        numberPointWritable.set(max);
+        resetINA();
+      }
+    });
   });
 </script>
 

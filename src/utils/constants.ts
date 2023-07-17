@@ -2,9 +2,6 @@ export const DEFAULT_STATUS_MSG = "Ready for request";
 export const APP_NAME = "Addition and Subscription";
 export const VERSION = "v1.0";
 export const REPO_URL = "https://github.com/biplobsd/as";
-export const THEME_MODE_KEY = "themeMode";
-export const STAR_KEY = "star-key";
-export const TIMEOUT_KEY = "timeout-key";
 export const AUTH_URL = "https://accounts.google.com/o/oauth2/auth";
 export const REDIRECT_URI =
   "https://" + chrome.runtime.id + ".chromiumapp.org/provider_cb";

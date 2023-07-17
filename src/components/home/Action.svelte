@@ -4,6 +4,7 @@
   import { clsx } from "clsx";
 
   import type { QuestionPack, Option } from "src/utils/interface";
+  import { increaseNumberAfterWritable } from "src/utils/writable";
 
   let showAns: boolean = false;
 
@@ -17,6 +18,7 @@
     stop = true;
     if (option.correct) {
       starWritable.update((x) => x + 1);
+      increaseNumberAfterWritable.update((x) => x - 1);
     }
     showAns = false;
   }
