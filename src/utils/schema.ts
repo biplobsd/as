@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { THEME_MODE_DEFAULT } from "./default";
 
 export const UserSchema = z.object({
   email: z.string().optional(),
@@ -12,4 +13,9 @@ export const UserSchema = z.object({
   sub: z.string().optional(),
 });
 
+export const ThemeSchema = z
+  .enum(["dark", "light"])
+  .default(THEME_MODE_DEFAULT);
+
+export type Theme = z.infer<typeof ThemeSchema>;
 export type User = z.infer<typeof UserSchema>;

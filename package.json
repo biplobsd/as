@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "2.0.0-beta.18",
+    "@macfja/svelte-persistent-store": "^2.3.1",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@total-typescript/ts-reset": "^0.4.2",
     "@tsconfig/svelte": "5.0.0",
@@ -22,6 +23,7 @@
     "axios": "^1.4.0",
     "copy-text-to-clipboard": "^3.1.0",
     "daisyui": "^3.1.7",
+    "fast-shuffle": "^6.0.1",
     "pino": "^8.14.1",
     "pino-pretty": "^10.0.0",
     "postcss": "^8.4.24",

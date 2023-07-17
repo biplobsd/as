@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "src/options/styles.css";
+  import "src/popup/styles.css";
   import Footer from "./Footer.svelte";
   import Header from "./Header.svelte";
   import Main from "./Main.svelte";
