@@ -2,6 +2,7 @@ import { writable } from "@macfja/svelte-persistent-store";
 import type { Writable } from "svelte/store";
 import {
   INCREASE_NUMBER_AFTER_KEY,
+  MODE_KEY,
   NUMBER_POINT_KEY,
   NUMBER_RANGE_KEY,
   SIGN_KEY,
@@ -10,7 +11,7 @@ import {
   TIMEOUT_KEY,
 } from "./storage_key";
 import { THEME_MODE_DEFAULT } from "./default";
-import type { Sign } from "./types";
+import type { Mode, Sign } from "./types";
 
 // Theme switch
 export const isDarkThemeWritable: Writable<string> = writable(
@@ -31,7 +32,7 @@ export const numberPointWritable: Writable<number> = writable(
 );
 // //
 
-// Number Point
+// Increase Number After
 export const storeIncreaseNumberAfterWritable: Writable<number> = writable(
   INCREASE_NUMBER_AFTER_KEY,
   5
@@ -55,4 +56,8 @@ export const numberRangeWritable: Writable<number> = writable(
 
 // Sign
 export const signWritable: Writable<Sign> = writable(SIGN_KEY, "+");
+// //
+
+// Mode
+export const modeWritable: Writable<Mode> = writable(MODE_KEY, "Easy");
 // //
