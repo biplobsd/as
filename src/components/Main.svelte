@@ -19,19 +19,19 @@
   </div>
   <div class="my-2 w-full">
     {#if tabName === "Home"}
-      <div in:blur out:slide>
+      <div in:slide>
         <Home />
       </div>
     {:else if tabName === "Leaderboard"}
-      <div in:blur out:slide>
+      <div in:slide>
         <Leaderboard />
       </div>
     {:else if tabName === "Settings"}
-      <div in:blur out:slide>
+      <div in:slide>
         <Settings />
       </div>
     {:else if tabName === "About"}
-      <div in:blur out:slide>
+      <div in:slide>
         <About />
       </div>
     {/if}
