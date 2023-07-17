@@ -4,11 +4,13 @@ import {
   INCREASE_NUMBER_AFTER_KEY,
   NUMBER_POINT_KEY,
   NUMBER_RANGE_KEY,
+  SIGN_KEY,
   STAR_KEY,
   THEME_MODE_KEY,
   TIMEOUT_KEY,
 } from "./storage_key";
 import { THEME_MODE_DEFAULT } from "./default";
+import type { Sign } from "./types";
 
 // Theme switch
 export const isDarkThemeWritable: Writable<string> = writable(
@@ -49,4 +51,8 @@ export const numberRangeWritable: Writable<number> = writable(
   NUMBER_RANGE_KEY,
   5
 );
+// //
+
+// Sign
+export const signWritable: Writable<Sign> = writable(SIGN_KEY, "+");
 // //

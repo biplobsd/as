@@ -2,6 +2,7 @@
   import ToggleButton from "../setting/Toggle_Button.svelte";
   import IncreaseNumber from "../setting/increase_number/Increase_Number.svelte";
   import NumberRange from "../setting/number_range/Number_Range.svelte";
+  import Sign from "../setting/sign/Sign.svelte";
   import Timeout from "../setting/timeout/Timeout_Setting.svelte";
 </script>
 
@@ -18,14 +19,7 @@
   <Timeout />
   <NumberRange />
   <IncreaseNumber />
-  <div>
-    <div class="font-bold text-sm mb-1">Only (+ or -)</div>
-    <div class="join w-full flex">
-      <ToggleButton text="Random" />
-      <ToggleButton text="+" />
-      <ToggleButton text="-" />
-    </div>
-  </div>
+  <Sign />
   <div>
     <div class="font-bold text-sm mb-1">Reset</div>
     <div class="join w-full flex">

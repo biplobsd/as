@@ -1,2 +1,2 @@
 export type TabName = "Home" | "Leaderboard" | "Settings" | "About";
-export type Sign = "+" | "-";
+export type Sign = "+" | "-" | "random";

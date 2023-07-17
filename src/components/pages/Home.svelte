@@ -4,12 +4,12 @@
   import { delay, randomIntFromInterval } from "src/utils/helper";
   import { shuffle } from "fast-shuffle";
   import type { QuestionPack } from "src/utils/interface";
-  import type { Sign } from "src/utils/types";
   import { onMount } from "svelte";
   import { blur } from "svelte/transition";
   import {
     numberPointWritable,
     numberRangeWritable,
+    signWritable,
     storeIncreaseNumberAfterWritable,
     timeWritable,
   } from "src/utils/storage";
@@ -19,7 +19,6 @@
   let stop: boolean = false;
   let isCountDowning: boolean = false;
   let timeout: number;
-  let sign: Sign = "+";
   let currentQuestion: QuestionPack | null = null;
 
   $: {
@@ -50,13 +49,33 @@
     const { min, max } = getMinMax();
     const number1 = randomIntFromInterval(min, max);
     const number2 = randomIntFromInterval(min, max);
-    const questionString = number1 + sign + number2;
+    const sign = get(signWritable);
+
     let ans: number;
-    if (sign === "+") {
-      ans = number1 + number2;
-    } else {
-      ans = number1 - number2;
+    let signText: string;
+
+    switch (sign) {
+      case "+":
+        ans = number1 + number2;
+        signText = sign;
+        break;
+      case "-":
+        ans = number1 - number2;
+        signText = sign;
+        break;
+      case "random":
+        if (Math.random() > 0.5) {
+          ans = number1 + number2;
+          signText = "+";
+        } else {
+          ans = number1 - number2;
+          signText = "-";
+        }
+        break;
     }
+
+    const questionString = number1 + signText + number2;
+
     const options = [
       {
         number: ans,
