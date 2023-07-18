@@ -24,6 +24,6 @@
 <Toaster
   toastOptions={{
     className:
-      "ring ring-base-content !tracking-wider !font-bold !bg-base-300/40 !backdrop-blur !text-base-content",
+      "!ring ring-success/20 !tracking-wider !font-bold !bg-base-300/40 !backdrop-blur !text-base-content",
   }}
 />

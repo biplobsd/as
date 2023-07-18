@@ -1,6 +1,7 @@
 import {
   modeWritable,
   numberRangeWritable,
+  signWritable,
   storeIncreaseNumberAfterWritable,
   timeWritable,
 } from "src/utils/storage";
@@ -23,6 +24,11 @@ export const MODE_DEFAULT = {
     increaseNumber: 5,
   },
 };
+
+export function setDefaultSetting() {
+  modeWritable.set("Easy");
+  signWritable.set("+");
+}
 
 export function checkIsInMode() {
   const timeout = get(timeWritable);

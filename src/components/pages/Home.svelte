@@ -112,6 +112,7 @@
   function getMinMax() {
     const numberRange = get(numberRangeWritable);
     const numberPoint = get(numberPointWritable);
+    console.log("nr", numberRange, "np", numberPoint);
     const min = numberPoint;
     const max = numberPoint + numberRange;
     return { min, max };
@@ -126,8 +127,9 @@
     resetINA();
 
     increaseNumberAfterWritable.subscribe((x) => {
-      if (x <= 0) {
-        const { max } = getMinMax();
+      if (x == 0) {
+        const { min, max } = getMinMax();
+        console.log("max", max, "min", min);
         numberPointWritable.set(max);
         resetINA();
       }
