@@ -1,7 +1,7 @@
 <script lang="ts">
   import Status from "../home/Status.svelte";
   import Action from "../home/Action.svelte";
-  import { delay, randomIntFromInterval } from "src/utils/helper";
+  import { delay, getMinMax, randomIntFromInterval, resetINA } from "src/utils/helper";
   import { shuffle } from "fast-shuffle";
   import type { QuestionPack } from "src/utils/interface";
   import { onMount } from "svelte";
@@ -20,6 +20,7 @@
   let isCountDowning: boolean = false;
   let timeout: number;
   let currentQuestion: QuestionPack | null = null;
+  let isNotNumberPointUpdated: boolean = true;
 
   $: {
     if (!isCountDowning && !stop && timeout !== 0) {
@@ -109,31 +110,9 @@
     countdown();
   }
 
-  function getMinMax() {
-    const numberRange = get(numberRangeWritable);
-    const numberPoint = get(numberPointWritable);
-    console.log("nr", numberRange, "np", numberPoint);
-    const min = numberPoint;
-    const max = numberPoint + numberRange;
-    return { min, max };
-  }
-
-  function resetINA() {
-    increaseNumberAfterWritable.set(get(storeIncreaseNumberAfterWritable));
-  }
-
   onMount(() => {
     start();
     resetINA();
-
-    increaseNumberAfterWritable.subscribe((x) => {
-      if (x == 0) {
-        const { min, max } = getMinMax();
-        console.log("max", max, "min", min);
-        numberPointWritable.set(max);
-        resetINA();
-      }
-    });
   });
 </script>
 
