@@ -15,7 +15,7 @@
   });
 </script>
 
-<div class="my-2 gap-2 flex justify-center items-center mb-3">
+<div class="gap-2 flex justify-center items-center mb-3">
   <a
     class="btn btn-xs normal-case"
     target="_blank"
