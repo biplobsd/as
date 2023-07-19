@@ -5,6 +5,7 @@
 
   import type { QuestionPack, Option } from "src/utils/interface";
   import { increaseNumberAfterWritable } from "src/utils/writable";
+  import { incrementStarServer } from "src/utils/firebase_update";
 
   let showAns: boolean = false;
 
@@ -19,6 +20,7 @@
     if (option.correct) {
       starWritable.update((x) => x + 1);
       increaseNumberAfterWritable.update((x) => x - 1);
+      incrementStarServer();
     }
     showAns = false;
   }

@@ -4,12 +4,12 @@
   import StarIcon from "../icons/Star_Icon.svelte";
   import { starWritable, timeWritable } from "src/utils/storage";
   import { get } from "svelte/store";
-  let star: number = 0;
+  let localStar: number = 0;
   export let timeout: number;
 
   onMount(async () => {
-    starWritable.subscribe((x) => {
-      star = x;
+    starWritable.subscribe((star) => {
+      localStar = star;
     });
   });
 </script>
@@ -22,7 +22,7 @@
     </div>
     <div class="flex items-center gap-1 font-semibold">
       <StarIcon />
-      <span>{star}</span>
+      <span>{localStar}</span>
     </div>
   </div>
   <progress

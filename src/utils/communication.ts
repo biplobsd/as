@@ -11,6 +11,8 @@ const StatusCodeSchema = z.enum([
   "message",
   "authToken",
   "authTokenSuccessful",
+  "logout",
+  "logoutSuccessful",
 ]);
 
 const StatusSchema = z.object({

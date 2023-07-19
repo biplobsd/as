@@ -1,3 +1,5 @@
+import log from "src/utils/logger";
+
 const manifest = chrome.runtime.getManifest();
 
 const settings = {
@@ -10,7 +12,27 @@ export const apiUrl = {
   webAuth: "https://accounts.google.com/o/oauth2/v2/auth",
   token: "https://www.googleapis.com/oauth2/v3/token",
   tokenInfo: "https://www.googleapis.com/oauth2/v3/tokeninfo",
+  revoke: "https://oauth2.googleapis.com/revoke",
 };
+
+export async function logout() {
+  const accessToken = await getAccessToken();
+  if (accessToken) {
+    let params = `?token=${accessToken}`;
+    const url = `${apiUrl.revoke}${params}`;
+    try {
+      await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+    } catch (e) {
+      log.error(e);
+    }
+  }
+  await chrome.storage.local.clear();
+}
 
 const getExpirationDate = (dateFrom: Date, expireInMinutes: number): number => {
   dateFrom.setMinutes(dateFrom.getMinutes() + expireInMinutes);

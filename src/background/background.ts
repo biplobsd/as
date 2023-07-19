@@ -1,10 +1,9 @@
-import { getAuthToken } from "src/api/authorization";
+import { getAuthToken, logout } from "src/api/authorization";
 import {
   type RuntimeMessage,
   runtimeMessageSchema,
   runtime,
 } from "src/utils/communication";
-import { AUTH_URL, REDIRECT_URI } from "src/utils/constants";
 
 import log from "src/utils/logger";
 
@@ -18,6 +17,17 @@ export async function acceptSignalSend() {
       code: "accept",
     },
   });
+}
+
+async function checkIsWorking() {
+  if (isWorking) {
+    await runtime.send({
+      type: "statusOption",
+      status: { code: "error", msg: "Background script is working ..." },
+    });
+    return true;
+  }
+  return false;
 }
 
 export async function parseData(dataLocal: RuntimeMessage) {
@@ -47,12 +57,7 @@ export async function parseData(dataLocal: RuntimeMessage) {
         }
         break;
       case "authToken":
-        if (isWorking) {
-          await runtime.send({
-            type: "statusOption",
-            status: { code: "error", msg: "Background script is working ..." },
-          });
-        }
+        if (await checkIsWorking()) return;
 
         isWorking = true;
 
@@ -96,6 +101,29 @@ export async function parseData(dataLocal: RuntimeMessage) {
         }
 
         break;
+      case "logout":
+        try {
+          if (await checkIsWorking()) return;
+
+          await runtime.send({
+            type: "statusOption",
+            status: { code: "loading", msg: "Removing all tokens..." },
+          });
+
+          await logout();
+          await runtime.send({
+            type: "statusOption",
+            status: {
+              msg: "[Background script] Logout Successful",
+              code: "logoutSuccessful",
+            },
+          });
+        } catch (error) {
+          log.error(error);
+        } finally {
+          isWorking = false;
+        }
+
       default:
         break;
     }
