@@ -26,8 +26,5 @@
       "128": "src/assets/icons/icon128.png"
     }
   },
-  "permissions": ["identity", "storage"],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self'"
-  }
+  "permissions": ["identity", "storage"]
 }
