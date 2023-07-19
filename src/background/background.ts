@@ -1,3 +1,4 @@
+import { getAuthToken } from "src/api/authorization";
 import {
   type RuntimeMessage,
   runtimeMessageSchema,
@@ -54,37 +55,17 @@ export async function parseData(dataLocal: RuntimeMessage) {
         }
 
         isWorking = true;
+
+        await runtime.send({
+          type: "statusOption",
+          status: { code: "loading", msg: "Getting access token..." },
+        });
+
         try {
-          const auth_params = {
-            client_id: import.meta.env.VITE_CLIENT_ID,
-            redirect_uri: REDIRECT_URI,
-            response_type: "token",
-            scope:
-              "https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/userinfo.profile",
-            prompt: "select_account",
-          };
-
-          const url = new URLSearchParams(
-            Object.entries(auth_params)
-          ).toString();
-          const oAuth2Url = AUTH_URL + "?" + url;
-          log.info("oAuth2URL", oAuth2Url);
-
-          const redirectTokenUrl = await chrome.identity.launchWebAuthFlow({
-            url: oAuth2Url,
-            interactive: true,
-          });
-
-          if (!redirectTokenUrl) {
-            return;
+          const access_token = await getAuthToken();
+          if (!access_token) {
+            throw new Error("access token undefined");
           }
-          const tokenMatch = redirectTokenUrl.match(
-            /\#(?:access_token)\=([\S\s]*?)\&/
-          );
-          if (!tokenMatch) {
-            return;
-          }
-          const token = tokenMatch[1];
 
           await runtime.send({
             type: "dataOptionAuthToken",
@@ -92,7 +73,7 @@ export async function parseData(dataLocal: RuntimeMessage) {
               code: "authTokenSuccessful",
               msg: "OAuth Token sending to the option/popup script",
             },
-            authToken: token,
+            authToken: access_token,
           });
 
           return;
@@ -113,6 +94,7 @@ export async function parseData(dataLocal: RuntimeMessage) {
         } finally {
           isWorking = false;
         }
+
         break;
       default:
         break;

@@ -2,6 +2,11 @@
   "name": "Addition and Subscription",
   "description": "Practice simple addition and subtraction equations",
   "version": "1.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm0neiiksppPuZgeDj6ylWVSgc2TR1vbIwStsU1skBzL0QOsa8nkGzIhbIAJ7t3pn+wYoIJFLCwbswCS+NUAYZd9v81lCxS11fW1Xe786uCVCeawZsLFR3ub8ex5dYG5xF9cGoTwGi+I68GnxYPuyNCRyF1tcp0be+EiKa+faZLvVIKVZmIEfNNcNuvy1sNvYgAOAnTIC5acKFiieUqXKk+3t11bDXe540n1l4fmgJTZ+CsDXsvlwCvHGcOCtjo+LHYoSH2IpxZMWG+VjmR9jQAuQA1ghAofqsbi47getBydNaB/WeOGtFMA8gjwh++cDf6gSrHjtClutvdzqSDcSxwIDAQAB",
+  "oauth2": {
+    "client_id": "898396714353-eu4rknciu60v4r5ph9899jf82km9rf4j.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.profile"]
+  },
   "manifest_version": 3,
   "icons": {
     "16": "src/assets/icons/icon16.png",

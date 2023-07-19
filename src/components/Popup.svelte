@@ -3,13 +3,7 @@
   import Footer from "./Footer.svelte";
   import Header from "./Header.svelte";
   import Main from "./Main.svelte";
-  import { onMount } from "svelte";
-  import { runtime } from "src/utils/communication";
   import { Toaster } from "svelte-french-toast";
-
-  onMount(() => {
-    runtime.isOptionsPage = true;
-  });
 </script>
 
 <div

@@ -3,6 +3,8 @@
   import icon48 from "src/assets/icons/icon128.png";
   import ThemeSwitch from "./Theme_Switch.svelte";
   import UserCircleIcon from "./icons/User_circle_Icon.svelte";
+  import { runtime } from "src/utils/communication";
+  import User from "./User.svelte";
 </script>
 
 <div
@@ -17,8 +19,10 @@
       <span class="text-xs font-mono text-base-content/80">{VERSION}</span>
     </div>
   </div>
-  <div class="flex flex-col items-center">
-    <button class="btn btn-circle btn-xs"><UserCircleIcon /></button>
+  <div class="flex flex-col items-center gap-0">
+    <div class="h-6">
+      <User />
+    </div>
     <ThemeSwitch />
   </div>
 </div>

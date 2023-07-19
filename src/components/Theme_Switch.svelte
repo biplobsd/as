@@ -12,6 +12,8 @@
     isDarkThemeWritable.subscribe((modeValue) => {
       isLight = modeValue === "light";
       themeMode = modeValue;
+
+      document.documentElement.setAttribute("data-theme", modeValue);
     });
   });
 </script>

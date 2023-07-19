@@ -2,6 +2,7 @@ import { writable } from "@macfja/svelte-persistent-store";
 import type { Writable } from "svelte/store";
 import {
   INCREASE_NUMBER_AFTER_KEY,
+  LOGIN_KEY,
   MODE_KEY,
   NUMBER_POINT_KEY,
   NUMBER_RANGE_KEY,
@@ -18,11 +19,6 @@ export const isDarkThemeWritable: Writable<string> = writable(
   THEME_MODE_KEY,
   THEME_MODE_DEFAULT
 );
-
-isDarkThemeWritable.subscribe(async (value) => {
-  document.documentElement.setAttribute("data-theme", value);
-});
-
 // //
 
 // Number Point
@@ -61,3 +57,9 @@ export const signWritable: Writable<Sign> = writable(SIGN_KEY, "+");
 // Mode
 export const modeWritable: Writable<Mode> = writable(MODE_KEY, "Easy");
 // //
+
+// Mode
+export const isUserLoggedWritable: Writable<boolean> = writable(
+  LOGIN_KEY,
+  false
+);
