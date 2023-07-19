@@ -10,7 +10,8 @@
   import type { RMUser } from "src/utils/interface";
   import { onMount } from "svelte";
   import TableRow from "../leaderboard/Table_Row.svelte";
-  import { blur } from "svelte/transition";
+  import { leaderboardUserCount } from "src/utils/writable";
+  import { get } from "svelte/store";
   let users: RMUser[] | null = null;
 
   onMount(() => {
@@ -21,6 +22,7 @@
     );
 
     onValue(topUsersRef, (snapshot) => {
+      leaderboardUserCount.set(snapshot.size);
       const rmUser: RMUser[] = [];
       snapshot.forEach((child) => {
         rmUser.push(child.val());
@@ -46,7 +48,7 @@
           <TableRow no={index + 1} {rmUser} />
         {/each}
       {:else}
-        {#each Array.from({ length: 5 }) as _}
+        {#each Array.from({ length: get(leaderboardUserCount) + 1 }) as _}
           <TableRow placeholder />
         {/each}
       {/if}

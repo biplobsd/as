@@ -6,6 +6,7 @@
   import type { QuestionPack, Option } from "src/utils/interface";
   import { increaseNumberAfterWritable } from "src/utils/writable";
   import { incrementStarServer } from "src/utils/firebase_update";
+  import { slide } from "svelte/transition";
 
   let showAns: boolean = false;
   let showAnsBtnIndex: number;
@@ -31,14 +32,19 @@
 {#if currentQuestion}
   <div class="flex flex-col gap-1">
     <div class="text-5xl text-center my-10 font-semibold">
-      {currentQuestion.text}
+      {#key currentQuestion.text}
+        <p transition:slide>
+          {currentQuestion.text}
+        </p>
+      {/key}
     </div>
-    <div class="grid-cols-2 grid gap-2 h-full">
+
+    <div class="grid-cols-2 grid gap-2">
       {#each currentQuestion.options as option, index}
         <button
           on:click={() => checkAns(option, index)}
           class={clsx(
-            "btn btn-md rounded-md text-3xl",
+            "btn btn-md rounded-md  w-full !py-0 !my-0  ",
             showAns && showAnsBtnIndex === index
               ? option.correct
                 ? "focus:btn-success"
@@ -46,7 +52,13 @@
               : ""
           )}
         >
-          {option.number}
+          <div>
+            {#key option.number}
+              <div class="text-3xl" transition:slide={{ duration: 100 }}>
+                {option.number}
+              </div>
+            {/key}
+          </div>
         </button>
       {/each}
     </div>

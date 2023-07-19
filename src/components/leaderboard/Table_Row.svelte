@@ -8,7 +8,7 @@
   export let placeholder: boolean | undefined = undefined;
 </script>
 
-<tr transition:blur class="hover">
+<tr class="hover">
   <th class="w-4">
     {#if placeholder}
       <div transition:slide class="ph-blank" />

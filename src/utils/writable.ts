@@ -17,3 +17,5 @@ increaseNumberAfterWritable.subscribe((x) => {
     resetINA();
   }
 });
+
+export const leaderboardUserCount = writable(10);
