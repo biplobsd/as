@@ -22,4 +22,8 @@
   .collect-channel-btn {
     @apply btn btn-success w-full rounded-full;
   }
+
+  .ph-blank {
+    @apply w-full h-4 bg-base-content/30 rounded-sm animate-pulse;
+  }
 }
