@@ -8,14 +8,16 @@
   import { incrementStarServer } from "src/utils/firebase_update";
 
   let showAns: boolean = false;
+  let showAnsBtnIndex: number;
 
   export let stop: boolean;
   export let currentQuestion: QuestionPack | null = null;
 
-  async function checkAns(option: Option) {
+  async function checkAns(option: Option, index: number) {
     if (showAns) return;
     showAns = true;
-    await delay(200);
+    showAnsBtnIndex = index;
+    await delay(100);
     stop = true;
     if (option.correct) {
       starWritable.update((x) => x + 1);
@@ -32,12 +34,12 @@
       {currentQuestion.text}
     </div>
     <div class="grid-cols-2 grid gap-2 h-full">
-      {#each currentQuestion.options as option}
+      {#each currentQuestion.options as option, index}
         <button
-          on:click={() => checkAns(option)}
+          on:click={() => checkAns(option, index)}
           class={clsx(
             "btn btn-md rounded-md text-3xl",
-            showAns
+            showAns && showAnsBtnIndex === index
               ? option.correct
                 ? "focus:btn-success"
                 : "focus:btn-error"

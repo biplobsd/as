@@ -1,26 +1,23 @@
 <script lang="ts">
   import Status from "../home/Status.svelte";
   import Action from "../home/Action.svelte";
-  import { delay, getMinMax, randomIntFromInterval, resetINA } from "src/utils/helper";
+  import {
+    delay,
+    getMinMax,
+    randomIntFromInterval,
+    resetINA,
+  } from "src/utils/helper";
   import { shuffle } from "fast-shuffle";
   import type { QuestionPack } from "src/utils/interface";
   import { onMount } from "svelte";
   import { blur } from "svelte/transition";
-  import {
-    numberPointWritable,
-    numberRangeWritable,
-    signWritable,
-    storeIncreaseNumberAfterWritable,
-    timeWritable,
-  } from "src/utils/storage";
+  import { signWritable, timeWritable } from "src/utils/storage";
   import { get } from "svelte/store";
-  import { increaseNumberAfterWritable } from "src/utils/writable";
 
   let stop: boolean = false;
   let isCountDowning: boolean = false;
   let timeout: number;
   let currentQuestion: QuestionPack | null = null;
-  let isNotNumberPointUpdated: boolean = true;
 
   $: {
     if (!isCountDowning && !stop && timeout !== 0) {
@@ -32,14 +29,14 @@
     if (isCountDowning) return;
     isCountDowning = true;
 
-    for (let index = timeout; index > 0; index -= 0.1) {
+    for (let index = timeout; index > 0; index -= 0.01) {
       if (stop) {
         break;
       }
       if (index % 1 != 0) {
         timeout = Math.round(index);
       }
-      await delay(100);
+      await delay(10);
     }
 
     isCountDowning = false;
