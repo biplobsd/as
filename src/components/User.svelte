@@ -84,8 +84,10 @@
     if (!uc || !uc.user.displayName || !uc.user.photoURL) return;
 
     const snapshot = await dbGet(child(ref(db), `users/${uc.user.uid}`));
+
     if (snapshot.exists()) {
       const user = snapshot.val() as RMUser;
+      console.log(user);
       starWritable.set(user.star);
     } else {
       if (

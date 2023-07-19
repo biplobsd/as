@@ -1,0 +1,15 @@
+{
+  "rules": {
+    ".read": "now < 1692295200000",
+    ".write": "auth != null",
+    "users": {
+      ".indexOn": "star",
+      "$uid": {
+        ".write": "auth != null && $uid === auth.uid",
+        "star": {
+          ".validate": "newData.val() === data.val() + 1 || newData.val() === 0"
+        }
+      }
+    }
+  }
+}
