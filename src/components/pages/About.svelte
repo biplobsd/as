@@ -3,7 +3,7 @@
   import MenuBox from "../about/menu_box.svelte";
 </script>
 
-<div class="space-y-0 rounded-box overflow-hidden">
+<div class="space-y-0 rounded-box overflow-hidden py-2 bg-base-200">
   <MenuBox title="App name" text={APP_NAME} />
   <MenuBox title="Version" text={`${VERSION} 2023`} />
   <MenuBox

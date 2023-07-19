@@ -2,8 +2,6 @@
   import { APP_NAME, VERSION } from "src/utils/constants";
   import icon48 from "src/assets/icons/icon128.png";
   import ThemeSwitch from "./Theme_Switch.svelte";
-  import UserCircleIcon from "./icons/User_circle_Icon.svelte";
-  import { runtime } from "src/utils/communication";
   import User from "./User.svelte";
 </script>
 

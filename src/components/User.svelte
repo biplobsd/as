@@ -147,7 +147,7 @@
   <div class="dropdown dropdown-end">
     <div
       tabIndex={0}
-      class="avatar tooltip tooltip-left"
+      class="avatar tooltip tooltip-left normal-case font-medium tooltip-info"
       data-tip={userCredential.user.displayName}
     >
       <div class="mask mask-squircle btn btn-xs btn-ghost btn-circle !m-0 !p-0">

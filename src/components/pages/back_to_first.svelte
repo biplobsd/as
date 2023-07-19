@@ -8,6 +8,7 @@
     starWritable,
   } from "src/utils/storage";
   import { THEME_MODE_DEFAULT } from "src/utils/default";
+  import { starToZero } from "src/utils/firebase_update";
 </script>
 
 <div class="space-y-2">
@@ -19,6 +20,7 @@
         isDarkThemeWritable.set(THEME_MODE_DEFAULT);
         starWritable.set(0);
         numberPointWritable.set(0);
+        starToZero();
         toast_.dismiss(toast.id);
       }}
       class="btn btn-sm btn-error">Reset</button

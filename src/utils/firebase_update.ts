@@ -39,3 +39,16 @@ export function incrementStarServer() {
     }
   });
 }
+
+export function starToZero() {
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      const updates = {};
+
+      // @ts-ignore
+      updates[`users/${user.uid}/star`] = 0;
+
+      update(ref(db), updates);
+    }
+  });
+}
