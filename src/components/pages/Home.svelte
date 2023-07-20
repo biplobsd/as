@@ -10,7 +10,7 @@
   import { shuffle } from "fast-shuffle";
   import type { QuestionPack } from "src/utils/interface";
   import { onMount } from "svelte";
-  import { blur } from "svelte/transition";
+  import { blur, slide } from "svelte/transition";
   import { signWritable, timeWritable } from "src/utils/storage";
   import { get } from "svelte/store";
   import ShieldExclamation from "../icons/Shield_Exclamation.svelte";
@@ -22,10 +22,17 @@
   let timeout: number;
   let currentQuestion: QuestionPack | null = null;
   let redoFailedCount: number = DEFAULT_REDO_FAILED_COUNT;
+  let warningScreen: boolean = false;
 
   $: {
     if (!isCountDowning && !stop && redoFailedCount >= 0 && timeout > 0) {
       start();
+    }
+  }
+
+  $: {
+    if (redoFailedCount <= 0 || timeout <= 0) {
+      warningScreen = true;
     }
   }
 
@@ -106,13 +113,14 @@
   }
 
   function start() {
-    timeout = get(timeWritable);
     currentQuestion = questionInfinity();
+    timeout = get(timeWritable);
     countdown();
   }
 
   function startPress() {
     redoFailedCount = DEFAULT_REDO_FAILED_COUNT;
+    warningScreen = false;
     start();
   }
 
@@ -123,41 +131,38 @@
 </script>
 
 <div class="relative">
-  {#if redoFailedCount <= 0}
+  {#if warningScreen}
     <div
       transition:blur
       class="backdrop-blur-sm absolute w-full h-full z-10 rounded-md"
     >
       <div class="flex justify-center items-center h-full flex-col gap-3">
-        <div
-          class="animate-pulse flex justify-center flex-col gap-3 text-md bg-error/90 font-semibold p-3 text-base-300 rounded-md items-center"
-        >
-          <ShieldExclamation />
-          <p class="text-center">
-            Too many failed attempts. Please ensure the current answer before
-            pressing the button.
-          </p>
-        </div>
+        {#if redoFailedCount <= 0}
+          <div
+            transition:slide
+            class="animate-pulse flex justify-center flex-col gap-3 text-md bg-error/90 font-semibold p-3 text-base-300 rounded-md items-center"
+          >
+            <ShieldExclamation />
+            <p class="text-center">
+              Too many failed attempts. Please ensure the current answer before
+              pressing the button.
+            </p>
+          </div>
+        {/if}
         <button on:click={startPress} class="btn btn-info">
           <ArrowPath />
           Try again</button
         >
       </div>
     </div>
-  {:else if timeout === 0}
-    <div
-      transition:blur
-      class="backdrop-blur-sm absolute w-full h-full z-10 rounded-md"
-    >
-      <div class="flex justify-center items-center h-full">
-        <button on:click={startPress} class="btn btn-info"
-          ><ArrowPath /> Try again</button
-        >
-      </div>
-    </div>
   {/if}
   <div>
     <Status bind:timeout />
-    <Action bind:currentQuestion bind:stop bind:redoFailedCount />
+    <Action
+      bind:warningScreen
+      bind:currentQuestion
+      bind:stop
+      bind:redoFailedCount
+    />
   </div>
 </div>

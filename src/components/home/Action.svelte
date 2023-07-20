@@ -15,9 +15,10 @@
   export let stop: boolean;
   export let currentQuestion: QuestionPack | null = null;
   export let redoFailedCount: number;
+  export let warningScreen: boolean;
 
   async function checkAns(option: Option, index: number) {
-    if (showAns) return;
+    if (showAns || warningScreen) return;
     showAnsBtnIndex = index;
     showAns = true;
     await delay(100);
