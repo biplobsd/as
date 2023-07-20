@@ -4,7 +4,7 @@
   import StarIcon from "../icons/Star_Icon.svelte";
   import { starWritable, timeWritable } from "src/utils/storage";
   import { get } from "svelte/store";
-  import { slide } from "svelte/transition";
+  import { blur, slide } from "svelte/transition";
   let localStar: number = 0;
   export let timeout: number;
 
@@ -35,13 +35,11 @@
     </div>
   </div>
   <div>
-    {#key timeout}
-      <progress
-        transition:slide={{ axis: "x" }}
-        class="progress progress-success transition-all delay-200"
-        value={Math.round((timeout / get(timeWritable)) * 100)}
-        max="100"
+    <div class="w-full bg-base-200 rounded-full h-2.5 mt-1">
+      <div
+        class="bg-base-content/70 h-2.5 rounded-full transition-all duration-500 ease-in-out"
+        style={`width: ${Math.round((timeout / get(timeWritable)) * 100)}%`}
       />
-    {/key}
+    </div>
   </div>
 </div>
