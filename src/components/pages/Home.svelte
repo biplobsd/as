@@ -16,6 +16,7 @@
   import ShieldExclamation from "../icons/Shield_Exclamation.svelte";
   import ArrowPath from "../icons/Arrow_Path.svelte";
   import { DEFAULT_REDO_FAILED_COUNT } from "src/utils/constants";
+  import SliderTips from "../tips/Slider_Tips.svelte";
 
   let stop: boolean = false;
   let isCountDowning: boolean = false;
@@ -148,6 +149,8 @@
               pressing the button.
             </p>
           </div>
+        {:else}
+          <SliderTips />
         {/if}
         <button on:click={startPress} class="btn btn-info">
           <ArrowPath />

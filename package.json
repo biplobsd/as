@@ -30,6 +30,7 @@
     "pino-pretty": "^10.0.0",
     "postcss": "^8.4.24",
     "svelte": "^4.0.1",
+    "svelte-carousel": "^1.0.25",
     "svelte-check": "3.4.4",
     "svelte-french-toast": "^1.1.0",
     "svelte-preprocess": "5.0.4",

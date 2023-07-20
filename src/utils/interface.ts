@@ -7,3 +7,9 @@ export interface QuestionPack {
   text: string;
   options: Option[];
 }
+
+export interface TooltipItem {
+  text: string;
+  img: string;
+  imgAlt: string;
+}
