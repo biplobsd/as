@@ -19,7 +19,6 @@
           <button
             class="btn btn-xs !p-1"
             on:click={() => {
-              console.log("copyClick");
               const toastID = toast.loading(`Copying... ${title}`);
               if (copy(text)) {
                 toast.success(`${title} copied! `, {

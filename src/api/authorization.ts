@@ -71,8 +71,8 @@ export const initialize = async () => {
   let params = `?client_id=${settings.client_id}`;
   params += `&scope=${manifest.oauth2!.scopes!.join(" ")}`;
   params += `&redirect_uri=${settings.redirect_uri}`;
-  params += "&response_type=code"; // code - to get refresh and offline token?
-  params += "&access_type=offline"; // offline not working with 'token' response type
+  params += "&response_type=code";
+  params += "&access_type=offline";
   params += "&prompt=consent";
   const responseUrl = await chrome.identity.launchWebAuthFlow({
     url: apiUrl.webAuth + params,
@@ -88,7 +88,7 @@ export const initialize = async () => {
     }
     return getTokens(codeParam);
   } else {
-    console.log(chrome.runtime.lastError);
+    log.info(chrome.runtime.lastError);
   }
   return undefined;
 };

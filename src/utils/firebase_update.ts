@@ -37,7 +37,7 @@ export async function writeUserData({
     return true;
   } catch (error) {
     log.error(error);
-    console.log(error);
+    // console.log(error);
     return false;
   }
 }

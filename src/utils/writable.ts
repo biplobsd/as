@@ -12,8 +12,7 @@ export const increaseNumberAfterWritable = writable(
 
 increaseNumberAfterWritable.subscribe((x) => {
   if (x == 0) {
-    const { min, max } = getMinMax();
-    console.log("max", max, "min", min, "x", x);
+    const { max } = getMinMax();
     numberPointWritable.set(max);
     resetINA();
   }

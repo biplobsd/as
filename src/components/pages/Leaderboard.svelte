@@ -25,7 +25,6 @@
   });
 
   onDestroy(async () => {
-    console.log("Destroy");
     await runtime.send({
       type: "statusBackground",
       status: {

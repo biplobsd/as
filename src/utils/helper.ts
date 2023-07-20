@@ -17,7 +17,6 @@ export function randomIntFromInterval(min: number, max: number) {
 export function getMinMax() {
   const numberRange = get(numberRangeWritable);
   const numberPoint = get(numberPointWritable);
-  console.log("nr", numberRange, "np", numberPoint);
   const min = numberPoint;
   const max = numberPoint + numberRange;
   return { min, max };

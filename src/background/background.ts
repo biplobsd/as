@@ -106,7 +106,7 @@ export async function parseData(dataLocal: RuntimeMessage) {
 
           return;
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           log.error(error);
 
           try {
@@ -174,7 +174,6 @@ export async function parseData(dataLocal: RuntimeMessage) {
         }
         break;
       case "top10UserStop":
-        console.log("Stop signal", onValueChangeUnsubscribe);
         try {
           if (await checkIsWorking()) return;
 

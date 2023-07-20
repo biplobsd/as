@@ -45,7 +45,7 @@
       lastStatusData.type === "statusOption"
     ) {
       const status = lastStatusData.status;
-      console.log(status.msg);
+      log.info(status.msg);
       switch (status.code) {
         case "loading":
           isRunning = true;

@@ -36,7 +36,6 @@
       });
     } else {
       redoFailedCount -= 1;
-      console.log(redoFailedCount);
     }
     showAns = false;
   }
