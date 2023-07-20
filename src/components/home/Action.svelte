@@ -7,20 +7,23 @@
   import { increaseNumberAfterWritable } from "src/utils/writable";
   import { slide } from "svelte/transition";
   import { runtime } from "src/utils/communication";
+  import { DEFAULT_REDO_FAILED_COUNT } from "src/utils/constants";
 
   let showAns: boolean = false;
   let showAnsBtnIndex: number;
 
   export let stop: boolean;
   export let currentQuestion: QuestionPack | null = null;
+  export let redoFailedCount: number;
 
   async function checkAns(option: Option, index: number) {
     if (showAns) return;
-    showAns = true;
     showAnsBtnIndex = index;
+    showAns = true;
     await delay(100);
     stop = true;
     if (option.correct) {
+      redoFailedCount = DEFAULT_REDO_FAILED_COUNT;
       starWritable.update((x) => x + 1);
       increaseNumberAfterWritable.update((x) => x - 1);
       await runtime.send({
@@ -30,8 +33,44 @@
           msg: "Add star count",
         },
       });
+    } else {
+      redoFailedCount -= 1;
+      console.log(redoFailedCount);
     }
     showAns = false;
+  }
+
+  async function onKeyDown(
+    e: KeyboardEvent & {
+      currentTarget: EventTarget & HTMLDivElement;
+    }
+  ) {
+    if (!currentQuestion) return;
+    const { options } = currentQuestion;
+    let op;
+
+    switch (e.key) {
+      case "ArrowUp":
+        op = options[0];
+        op.btn.focus();
+        await checkAns(op, 0);
+        break;
+      case "ArrowDown":
+        op = options[1];
+        op.btn.focus();
+        await checkAns(op, 1);
+        break;
+      case "ArrowLeft":
+        op = options[2];
+        op.btn.focus();
+        await checkAns(op, 2);
+        break;
+      case "ArrowRight":
+        op = options[3];
+        op.btn.focus();
+        await checkAns(op, 3);
+        break;
+    }
   }
 </script>
 
@@ -44,13 +83,19 @@
         </p>
       {/key}
     </div>
-
-    <div class="grid-cols-2 grid gap-2">
+    <div
+      role="button"
+      tabindex="0"
+      on:keydown={onKeyDown}
+      aria-label="Press option by keyboard"
+      class="grid-cols-2 grid gap-2"
+    >
       {#each currentQuestion.options as option, index}
         <button
+          bind:this={option.btn}
           on:click={() => checkAns(option, index)}
           class={clsx(
-            "btn btn-md rounded-md  w-full !py-0 !my-0  ",
+            "btn btn-md rounded-md w-full !py-0 !my-0",
             showAns && showAnsBtnIndex === index
               ? option.correct
                 ? "focus:btn-success"

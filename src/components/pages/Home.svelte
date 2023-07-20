@@ -13,14 +13,18 @@
   import { blur } from "svelte/transition";
   import { signWritable, timeWritable } from "src/utils/storage";
   import { get } from "svelte/store";
+  import ShieldExclamation from "../icons/Shield_Exclamation.svelte";
+  import ArrowPath from "../icons/Arrow_Path.svelte";
+  import { DEFAULT_REDO_FAILED_COUNT } from "src/utils/constants";
 
   let stop: boolean = false;
   let isCountDowning: boolean = false;
   let timeout: number;
   let currentQuestion: QuestionPack | null = null;
+  let redoFailedCount: number = DEFAULT_REDO_FAILED_COUNT;
 
   $: {
-    if (!isCountDowning && !stop && timeout !== 0) {
+    if (!isCountDowning && !stop && redoFailedCount >= 0 && timeout > 0) {
       start();
     }
   }
@@ -30,7 +34,7 @@
     isCountDowning = true;
 
     for (let index = timeout; index > 0; index -= 0.01) {
-      if (stop) {
+      if (stop || redoFailedCount <= 0) {
         break;
       }
       if (index % 1 != 0) {
@@ -107,6 +111,11 @@
     countdown();
   }
 
+  function startPress() {
+    redoFailedCount = DEFAULT_REDO_FAILED_COUNT;
+    start();
+  }
+
   onMount(() => {
     start();
     resetINA();
@@ -114,18 +123,41 @@
 </script>
 
 <div class="relative">
-  {#if timeout === 0}
+  {#if redoFailedCount <= 0}
+    <div
+      transition:blur
+      class="backdrop-blur-sm absolute w-full h-full z-10 rounded-md"
+    >
+      <div class="flex justify-center items-center h-full flex-col gap-3">
+        <div
+          class="animate-pulse flex justify-center flex-col gap-3 text-md bg-error/90 font-semibold p-3 text-base-300 rounded-md items-center"
+        >
+          <ShieldExclamation />
+          <p class="text-center">
+            Too many failed attempts. Please ensure the current answer before
+            pressing the button.
+          </p>
+        </div>
+        <button on:click={startPress} class="btn btn-info">
+          <ArrowPath />
+          Try again</button
+        >
+      </div>
+    </div>
+  {:else if timeout === 0}
     <div
       transition:blur
       class="backdrop-blur-sm absolute w-full h-full z-10 rounded-md"
     >
       <div class="flex justify-center items-center h-full">
-        <button on:click={start} class="btn btn-info">Try again</button>
+        <button on:click={startPress} class="btn btn-info"
+          ><ArrowPath /> Try again</button
+        >
       </div>
     </div>
   {/if}
   <div>
     <Status bind:timeout />
-    <Action bind:currentQuestion bind:stop />
+    <Action bind:currentQuestion bind:stop bind:redoFailedCount />
   </div>
 </div>
