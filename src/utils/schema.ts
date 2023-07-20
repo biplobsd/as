@@ -17,5 +17,12 @@ export const ThemeSchema = z
   .enum(["dark", "light"])
   .default(THEME_MODE_DEFAULT);
 
+export const RMUserSchema = z.object({
+  displayName: z.string(),
+  photoURL: z.string(),
+  star: z.number(),
+});
+
 export type Theme = z.infer<typeof ThemeSchema>;
 export type User = z.infer<typeof UserSchema>;
+export type RMUser = z.infer<typeof RMUserSchema>;

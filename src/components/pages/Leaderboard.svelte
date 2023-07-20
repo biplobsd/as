@@ -1,33 +1,37 @@
 <script lang="ts">
-  import {
-    limitToLast,
-    onValue,
-    orderByChild,
-    query,
-    ref,
-  } from "firebase/database";
-  import { db } from "src/utils/firebase";
-  import type { RMUser } from "src/utils/interface";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import TableRow from "../leaderboard/Table_Row.svelte";
-  import { leaderboardUserCount } from "src/utils/writable";
+  import { leaderboardRMUser, leaderboardUserCount } from "src/utils/writable";
   import { get } from "svelte/store";
+  import type { RMUser } from "src/utils/schema";
+  import { runtime } from "src/utils/communication";
   let users: RMUser[] | null = null;
 
-  onMount(() => {
-    const topUsersRef = query(
-      ref(db, "users"),
-      orderByChild("star"),
-      limitToLast(10)
-    );
+  onMount(async () => {
+    leaderboardRMUser.subscribe((x) => {
+      if (x) {
+        leaderboardUserCount.set(x.length);
+        users = x;
+      }
+    });
 
-    onValue(topUsersRef, (snapshot) => {
-      leaderboardUserCount.set(snapshot.size);
-      const rmUser: RMUser[] = [];
-      snapshot.forEach((child) => {
-        rmUser.push(child.val());
-      });
-      users = rmUser.reverse();
+    await runtime.send({
+      type: "statusBackground",
+      status: {
+        code: "top10UserStart",
+        msg: "Start listener",
+      },
+    });
+  });
+
+  onDestroy(async () => {
+    console.log("Destroy");
+    await runtime.send({
+      type: "statusBackground",
+      status: {
+        code: "top10UserStop",
+        msg: "Start listener",
+      },
     });
   });
 </script>

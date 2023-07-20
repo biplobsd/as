@@ -4,7 +4,7 @@
   import StarIcon from "../icons/Star_Icon.svelte";
   import { starWritable, timeWritable } from "src/utils/storage";
   import { get } from "svelte/store";
-  import { blur, slide } from "svelte/transition";
+  import { slide } from "svelte/transition";
   let localStar: number = 0;
   export let timeout: number;
 

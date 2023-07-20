@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { RMUser } from "src/utils/interface";
-  import { blur, slide } from "svelte/transition";
+  import type { RMUser } from "src/utils/schema";
+
+  import { slide } from "svelte/transition";
   import tc from "thousands-counter";
 
   export let no: number | undefined = undefined;

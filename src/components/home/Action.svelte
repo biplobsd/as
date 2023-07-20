@@ -5,8 +5,8 @@
 
   import type { QuestionPack, Option } from "src/utils/interface";
   import { increaseNumberAfterWritable } from "src/utils/writable";
-  import { incrementStarServer } from "src/utils/firebase_update";
   import { slide } from "svelte/transition";
+  import { runtime } from "src/utils/communication";
 
   let showAns: boolean = false;
   let showAnsBtnIndex: number;
@@ -23,7 +23,13 @@
     if (option.correct) {
       starWritable.update((x) => x + 1);
       increaseNumberAfterWritable.update((x) => x - 1);
-      incrementStarServer();
+      await runtime.send({
+        type: "statusBackground",
+        status: {
+          code: "incrementStarServer",
+          msg: "Add star count",
+        },
+      });
     }
     showAns = false;
   }

@@ -1,6 +1,7 @@
 import { delay } from "./helper";
 import log from "./logger";
 import { z } from "zod";
+import { RMUserSchema } from "./schema";
 
 const StatusCodeSchema = z.enum([
   "loading",
@@ -9,8 +10,12 @@ const StatusCodeSchema = z.enum([
   "ready",
   "accept",
   "message",
-  "authToken",
-  "authTokenSuccessful",
+  "user",
+  "users",
+  "top10UserStart",
+  "top10UserStop",
+  "starToZero",
+  "incrementStarServer",
   "logout",
   "logoutSuccessful",
 ]);
@@ -22,9 +27,14 @@ const StatusSchema = z.object({
 
 export const runtimeMessageSchema = z.discriminatedUnion("type", [
   z.object({
-    type: z.literal("dataOptionAuthToken"),
+    type: z.literal("dataOptionUser"),
+    user: RMUserSchema,
     status: StatusSchema,
-    authToken: z.string(),
+  }),
+  z.object({
+    type: z.literal("dataOptionTop10User"),
+    users: RMUserSchema.array(),
+    status: StatusSchema,
   }),
   z.object({
     type: z.enum(["status", "statusOption", "statusBackground"]),

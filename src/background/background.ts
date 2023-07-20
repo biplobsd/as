@@ -1,11 +1,21 @@
+import { type Unsubscribe } from "firebase/database";
 import { getAuthToken, logout } from "src/api/authorization";
 import {
   type RuntimeMessage,
   runtimeMessageSchema,
   runtime,
 } from "src/utils/communication";
+import { signInWithCredentialAccessToken } from "src/utils/firebase";
+import {
+  incrementStarServer,
+  onRMValueChangeListener,
+  setUserCredential,
+  starToZero,
+} from "src/utils/firebase_update";
 
 import log from "src/utils/logger";
+
+let onValueChangeUnsubscribe: Unsubscribe | null = null;
 
 let isWorking = false;
 
@@ -56,7 +66,7 @@ export async function parseData(dataLocal: RuntimeMessage) {
           await acceptSignalSend();
         }
         break;
-      case "authToken":
+      case "user":
         if (await checkIsWorking()) return;
 
         isWorking = true;
@@ -72,17 +82,31 @@ export async function parseData(dataLocal: RuntimeMessage) {
             throw new Error("access token undefined");
           }
 
-          await runtime.send({
-            type: "dataOptionAuthToken",
-            status: {
-              code: "authTokenSuccessful",
-              msg: "OAuth Token sending to the option/popup script",
-            },
-            authToken: access_token,
-          });
+          const uc = await signInWithCredentialAccessToken(access_token);
+          const user = await setUserCredential(uc);
+
+          if (user) {
+            await runtime.send({
+              type: "dataOptionUser",
+              status: {
+                code: "user",
+                msg: "RM user data",
+              },
+              user,
+            });
+          } else {
+            await runtime.send({
+              type: "statusOption",
+              status: {
+                code: "error",
+                msg: "Error: Unable to get the RM user data",
+              },
+            });
+          }
 
           return;
         } catch (error) {
+          console.log(error);
           log.error(error);
 
           try {
@@ -123,7 +147,57 @@ export async function parseData(dataLocal: RuntimeMessage) {
         } finally {
           isWorking = false;
         }
+        break;
+      case "incrementStarServer":
+        try {
+          if (await checkIsWorking()) return;
 
+          incrementStarServer();
+        } catch (error) {
+          log.error(error);
+        } finally {
+          isWorking = false;
+        }
+        break;
+      case "top10UserStart":
+        try {
+          if (await checkIsWorking()) return;
+
+          if (onValueChangeUnsubscribe) {
+            onValueChangeUnsubscribe();
+          }
+          onValueChangeUnsubscribe = onRMValueChangeListener();
+        } catch (error) {
+          log.error(error);
+        } finally {
+          isWorking = false;
+        }
+        break;
+      case "top10UserStop":
+        console.log("Stop signal", onValueChangeUnsubscribe);
+        try {
+          if (await checkIsWorking()) return;
+
+          if (onValueChangeUnsubscribe) {
+            onValueChangeUnsubscribe();
+          }
+        } catch (error) {
+          log.error(error);
+        } finally {
+          isWorking = false;
+        }
+        break;
+      case "starToZero":
+        try {
+          if (await checkIsWorking()) return;
+
+          starToZero();
+        } catch (error) {
+          log.error(error);
+        } finally {
+          isWorking = false;
+        }
+        break;
       default:
         break;
     }

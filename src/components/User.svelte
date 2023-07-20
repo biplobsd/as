@@ -6,24 +6,22 @@
   } from "src/utils/communication";
   import UserCircleIcon from "./icons/User_circle_Icon.svelte";
   import log from "src/utils/logger";
-  import { db, signInWithCredentialAccessToken } from "src/utils/firebase";
   import { onDestroy, onMount } from "svelte";
-  import { type UserCredential } from "firebase/auth";
+
   import {
     isDarkThemeWritable,
     isUserLoggedWritable,
     starWritable,
   } from "src/utils/storage";
 
-  import { writeUserData } from "src/utils/firebase_update";
-  import { type RMUser } from "src/utils/interface";
   import { get } from "svelte/store";
-  import { child, get as dbGet, ref } from "firebase/database";
+  import type { RMUser } from "src/utils/schema";
+  import { leaderboardRMUser } from "src/utils/writable";
 
   let ready: boolean = false;
   let isRunning: boolean = false;
   let storageRemoveListener: () => void;
-  let userCredential: UserCredential | null;
+  let rmUser: RMUser | null;
   let isLight = false;
 
   let lastStatusData: RuntimeMessage | undefined = undefined;
@@ -64,53 +62,28 @@
           ready = true;
           return;
         case "logoutSuccessful":
-          userCredential = null;
+          rmUser = null;
           isUserLoggedWritable.set(false);
           isRunning = false;
         default:
           return;
       }
-    } else if (dataLocal.type === "dataOptionAuthToken") {
+    } else if (dataLocal.type === "dataOptionUser") {
+      rmUser = dataLocal.user;
+      isUserLoggedWritable.set(true);
+      starWritable.set(rmUser.star);
       isRunning = false;
-      isRunning = true;
-      await setUserCredential(
-        await signInWithCredentialAccessToken(dataLocal.authToken)
-      );
-      isRunning = false;
+    } else if (dataLocal.type === "dataOptionTop10User") {
+      leaderboardRMUser.set(dataLocal.users);
     }
   }
 
-  async function setUserCredential(uc: UserCredential | null) {
-    if (!uc || !uc.user.displayName || !uc.user.photoURL) return;
-
-    const snapshot = await dbGet(child(ref(db), `users/${uc.user.uid}`));
-
-    if (snapshot.exists()) {
-      const user = snapshot.val() as RMUser;
-      console.log(user);
-      starWritable.set(user.star);
-    } else {
-      if (
-        // @ts-ignore
-        await writeUserData({
-          ...uc.user,
-          star: 0,
-        })
-      ) {
-        starWritable.set(0);
-      }
-    }
-
-    userCredential = uc;
-    isUserLoggedWritable.set(true);
-  }
-
-  async function getAuthToken() {
+  async function getRMUser() {
     await runtime.send({
       type: "statusBackground",
       status: {
-        code: "authToken",
-        msg: "get the auth token",
+        code: "user",
+        msg: "get the RM user",
       },
     });
   }
@@ -127,7 +100,7 @@
 
   onMount(async () => {
     if (get(isUserLoggedWritable)) {
-      await getAuthToken();
+      await getRMUser();
     }
 
     runtime.isOptionsPage = true;
@@ -138,28 +111,32 @@
     });
   });
 
-  onDestroy(() => {
+  onDestroy(async () => {
     storageRemoveListener();
+    await runtime.send({
+      type: "statusBackground",
+      status: {
+        code: "top10UserStop",
+        msg: "Start listener",
+      },
+    });
   });
 </script>
 
 {#if isRunning}
   <span class="loading loading-spinner loading-xs" />
-{:else if userCredential}
+{:else if rmUser}
   <div class="dropdown dropdown-end">
     <div
       tabIndex={0}
       class="avatar tooltip tooltip-left normal-case font-medium tooltip-info"
-      data-tip={userCredential.user.displayName}
+      data-tip={rmUser.displayName}
     >
       <div class="mask mask-squircle btn btn-xs btn-ghost btn-circle !m-0 !p-0">
         <div
           class="avatar rounded-full placeholder flex justify-center items-center"
         >
-          <img
-            src={userCredential.user.photoURL}
-            alt={userCredential.user.displayName}
-          />
+          <img src={rmUser.photoURL} alt={rmUser.displayName} />
         </div>
       </div>
     </div>
@@ -183,7 +160,7 @@
   >
     <button
       class="btn btn-xs btn-ghost btn-circle !m-0 !p-0"
-      on:click={getAuthToken}
+      on:click={getRMUser}
     >
       <UserCircleIcon />
     </button>
