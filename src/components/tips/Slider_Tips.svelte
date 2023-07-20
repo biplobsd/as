@@ -5,8 +5,9 @@
   import modeChange from "src/assets/gifs/tooltips/mode_change.gif";
   import { shuffle } from "fast-shuffle";
   import Item from "./Item.svelte";
+  import { onMount } from "svelte";
 
-  const data: TooltipItem[] = shuffle([
+  let data: TooltipItem[] = [
     {
       text: "Use the keyboard Arrow keys to quickly select the option. Press Tab to highlight the area.",
       img: keyboardUse,
@@ -17,7 +18,11 @@
       img: modeChange,
       imgAlt: "Mode Change",
     },
-  ]);
+  ];
+
+  onMount(() => {
+    data = shuffle(data);
+  });
 </script>
 
 <Carousel
