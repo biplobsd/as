@@ -2,14 +2,15 @@
   import { onMount } from "svelte";
   import ModeButton from "./mode_button.svelte";
   import {
-    modeWritable,
     timeWritable,
     numberRangeWritable,
     storeIncreaseNumberAfterWritable,
   } from "src/utils/storage";
-  import { MODE_DEFAULT } from "./mode_default";
+  import { MODE_DEFAULT, checkIsInMode } from "./mode_default";
+  import { modeWritable } from "src/utils/writable";
 
   onMount(() => {
+    checkIsInMode();
     modeWritable.subscribe((x) => {
       const { easy, medium, hard } = MODE_DEFAULT;
       switch (x) {

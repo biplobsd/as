@@ -1,10 +1,10 @@
 import {
-  modeWritable,
   numberRangeWritable,
   signWritable,
   storeIncreaseNumberAfterWritable,
   timeWritable,
 } from "src/utils/storage";
+import { modeWritable } from "src/utils/writable";
 import { get } from "svelte/store";
 
 export const MODE_DEFAULT = {

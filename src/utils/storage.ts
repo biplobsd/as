@@ -12,10 +12,10 @@ import {
   TIMEOUT_KEY,
 } from "./storage_key";
 import { THEME_MODE_DEFAULT } from "./default";
-import type { Mode, Sign } from "./types";
+import type { Sign, ThemeMode } from "./types";
 
 // Theme switch
-export const isDarkThemeWritable: Writable<string> = writable(
+export const isDarkThemeWritable: Writable<ThemeMode> = writable(
   THEME_MODE_KEY,
   THEME_MODE_DEFAULT
 );
@@ -52,10 +52,6 @@ export const numberRangeWritable: Writable<number> = writable(
 
 // Sign
 export const signWritable: Writable<Sign> = writable(SIGN_KEY, "+");
-// //
-
-// Mode
-export const modeWritable: Writable<Mode> = writable(MODE_KEY, "Easy");
 // //
 
 // Mode
