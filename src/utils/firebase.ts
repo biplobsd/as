@@ -12,7 +12,7 @@ import {
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDZhAYmcgU1jJd9kAVtKvxdObToRlIRpTM",
-  authDomain: "addition-and-subscription.firebaseapp.com",
+  authDomain: "as.biplobsd.me",
   projectId: "addition-and-subscription",
   storageBucket: "addition-and-subscription.appspot.com",
   messagingSenderId: "898396714353",
