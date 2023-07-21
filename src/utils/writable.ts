@@ -3,7 +3,7 @@ import {
   numberPointWritable,
   storeIncreaseNumberAfterWritable,
 } from "./storage";
-import { getMinMax, resetINA } from "./helper";
+import { delay, getMinMax, resetINA, saveToCloudUserSetting } from "./helper";
 import { type RMUser } from "./schema";
 import type { Mode } from "./types";
 
@@ -11,11 +11,13 @@ export const increaseNumberAfterWritable = writable(
   get(storeIncreaseNumberAfterWritable)
 );
 
-increaseNumberAfterWritable.subscribe((x) => {
+increaseNumberAfterWritable.subscribe(async (x) => {
   if (x == 0) {
     const { max } = getMinMax();
     numberPointWritable.set(max);
     resetINA();
+    await delay(10);
+    saveToCloudUserSetting();
   }
 });
 

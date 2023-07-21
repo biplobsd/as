@@ -11,6 +11,7 @@ import {
   onRMValueChangeListener,
   setUserCredential,
   starToZero,
+  updateUserSettings,
 } from "src/utils/firebase_update";
 
 import log from "src/utils/logger";
@@ -199,6 +200,15 @@ export async function parseData(dataLocal: RuntimeMessage) {
         break;
       default:
         break;
+    }
+  } else if (dataParsed.type === "dataBackgroundUserSettings") {
+    try {
+      if (await checkIsWorking()) return;
+      updateUserSettings(dataParsed.userSettings);
+    } catch (error) {
+      log.error(error);
+    } finally {
+      isWorking = false;
     }
   }
 }

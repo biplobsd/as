@@ -1,3 +1,4 @@
+import { delay, saveToCloudUserSetting } from "src/utils/helper";
 import {
   numberRangeWritable,
   signWritable,
@@ -25,9 +26,11 @@ export const MODE_DEFAULT = {
   },
 };
 
-export function setDefaultSetting() {
+export async function setDefaultSetting() {
   modeWritable.set("Easy");
   signWritable.set("+");
+  await delay(10);
+  await saveToCloudUserSetting();
 }
 
 export function checkIsInMode() {

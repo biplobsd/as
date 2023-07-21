@@ -9,6 +9,7 @@
   } from "src/utils/storage";
   import { THEME_MODE_DEFAULT } from "src/utils/default";
   import { runtime } from "src/utils/communication";
+  import { delay, saveToCloudUserSetting } from "src/utils/helper";
 </script>
 
 <div class="space-y-2">
@@ -27,6 +28,8 @@
             msg: "Set star to zero",
           },
         });
+        await delay(10);
+        await saveToCloudUserSetting();
         toast_.dismiss(toast.id);
       }}
       class="btn btn-sm btn-error">Reset</button

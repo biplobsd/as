@@ -1,5 +1,6 @@
 <script lang="ts">
   import { THEME_MODE_DEFAULT } from "src/utils/default";
+  import { saveToCloudUserSetting } from "src/utils/helper";
   import { isDarkThemeWritable } from "src/utils/storage";
   import { onMount } from "svelte";
 
@@ -9,11 +10,12 @@
     modeValue === "dark" ? "light" : "dark";
 
   onMount(() => {
-    isDarkThemeWritable.subscribe((modeValue) => {
+    isDarkThemeWritable.subscribe(async (modeValue) => {
       isLight = modeValue === "light";
       themeMode = modeValue;
 
       document.documentElement.setAttribute("data-theme", modeValue);
+      await saveToCloudUserSetting();
     });
   });
 </script>

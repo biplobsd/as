@@ -23,6 +23,19 @@ export const RMUserSchema = z.object({
   star: z.number(),
 });
 
+export const SignSchema = z.enum(["+", "-", "random"]);
+
+export const UserSettingSchema = z.object({
+  timeout: z.number(),
+  numberRange: z.number(),
+  increaseNumber: z.number(),
+  numberPoint: z.number(),
+  sign: SignSchema,
+  themeMode: ThemeSchema,
+});
+
 export type Theme = z.infer<typeof ThemeSchema>;
 export type User = z.infer<typeof UserSchema>;
 export type RMUser = z.infer<typeof RMUserSchema>;
+export type Sign = z.infer<typeof SignSchema>;
+export type UserSetting = z.infer<typeof UserSettingSchema>;

@@ -1,7 +1,7 @@
 import { delay } from "./helper";
 import log from "./logger";
 import { z } from "zod";
-import { RMUserSchema } from "./schema";
+import { RMUserSchema, UserSettingSchema } from "./schema";
 
 const StatusCodeSchema = z.enum([
   "loading",
@@ -37,6 +37,11 @@ export const runtimeMessageSchema = z.discriminatedUnion("type", [
     status: StatusSchema,
   }),
   z.object({
+    type: z.enum(["dataBackgroundUserSettings", "dataOptionUserSettings"]),
+    userSettings: UserSettingSchema,
+    status: StatusSchema,
+  }),
+  z.object({
     type: z.enum(["status", "statusOption", "statusBackground"]),
     status: StatusSchema,
   }),
@@ -65,7 +70,11 @@ export const runtime: RuntimeModel = {
   isOptionsPage: false,
   sendOnce: async function (runtimeMessage) {
     try {
-      if (this.isOptionsPage && runtimeMessage.type !== "statusBackground") {
+      if (
+        this.isOptionsPage &&
+        runtimeMessage.type !== "statusBackground" &&
+        runtimeMessage.type !== "dataBackgroundUserSettings"
+      ) {
         const [tab] = await chrome.tabs.query({
           active: true,
           currentWindow: true,

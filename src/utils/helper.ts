@@ -1,10 +1,15 @@
 import { get } from "svelte/store";
 import {
+  isDarkThemeWritable,
   numberPointWritable,
   numberRangeWritable,
+  signWritable,
   storeIncreaseNumberAfterWritable,
+  timeWritable,
 } from "./storage";
 import { increaseNumberAfterWritable } from "./writable";
+import type { UserSetting } from "./schema";
+import { runtime } from "./communication";
 
 export async function delay(ms: number) {
   return await new Promise((resolve) => setTimeout(resolve, ms));
@@ -24,4 +29,43 @@ export function getMinMax() {
 
 export function resetINA() {
   increaseNumberAfterWritable.set(get(storeIncreaseNumberAfterWritable));
+}
+
+export function getUserSetting(): UserSetting {
+  return {
+    timeout: get(timeWritable),
+    numberRange: get(numberRangeWritable),
+    increaseNumber: get(storeIncreaseNumberAfterWritable),
+    numberPoint: get(numberPointWritable),
+    sign: get(signWritable),
+    themeMode: get(isDarkThemeWritable),
+  };
+}
+
+export function setUserSetting({
+  timeout,
+  increaseNumber,
+  numberPoint,
+  numberRange,
+  sign,
+  themeMode,
+}: UserSetting) {
+  timeWritable.set(timeout);
+  numberRangeWritable.set(numberRange);
+  increaseNumberAfterWritable.set(increaseNumber);
+  numberPointWritable.set(numberPoint);
+  signWritable.set(sign);
+  isDarkThemeWritable.set(themeMode);
+}
+
+export async function saveToCloudUserSetting() {
+  const q = getUserSetting();
+  await runtime.send({
+    type: "dataBackgroundUserSettings",
+    userSettings: q,
+    status: {
+      code: "message",
+      msg: "Update user setting",
+    },
+  });
 }

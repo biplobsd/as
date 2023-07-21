@@ -14,7 +14,7 @@ import {
 import { auth, db } from "./firebase";
 import log from "./logger";
 import type { UserCredential } from "firebase/auth";
-import type { RMUser } from "./schema";
+import type { RMUser, UserSetting } from "./schema";
 import { runtime } from "./communication";
 
 export async function writeUserData({
@@ -62,6 +62,19 @@ export function starToZero() {
 
       // @ts-ignore
       updates[`users/${user.uid}/star`] = 0;
+
+      update(ref(db), updates);
+    }
+  });
+}
+
+export function updateUserSettings(userSetting: UserSetting) {
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      const updates = {};
+
+      // @ts-ignore
+      updates[`usersSetting/${user.uid}`] = userSetting;
 
       update(ref(db), updates);
     }

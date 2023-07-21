@@ -3,7 +3,6 @@ import type { Writable } from "svelte/store";
 import {
   INCREASE_NUMBER_AFTER_KEY,
   LOGIN_KEY,
-  MODE_KEY,
   NUMBER_POINT_KEY,
   NUMBER_RANGE_KEY,
   SIGN_KEY,
@@ -12,10 +11,10 @@ import {
   TIMEOUT_KEY,
 } from "./storage_key";
 import { THEME_MODE_DEFAULT } from "./default";
-import type { Sign, ThemeMode } from "./types";
+import type { Sign, Theme } from "./schema";
 
 // Theme switch
-export const isDarkThemeWritable: Writable<ThemeMode> = writable(
+export const isDarkThemeWritable: Writable<Theme> = writable(
   THEME_MODE_KEY,
   THEME_MODE_DEFAULT
 );
@@ -26,6 +25,7 @@ export const numberPointWritable: Writable<number> = writable(
   NUMBER_POINT_KEY,
   0
 );
+
 // //
 
 // Increase Number After

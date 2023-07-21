@@ -1,8 +1,8 @@
 <script lang="ts">
   import { signWritable } from "src/utils/storage";
   import ToggleButton from "../Toggle_Button.svelte";
-  import type { Sign } from "src/utils/types";
   import { onMount } from "svelte";
+  import type { Sign } from "src/utils/schema";
 
   export let signText: Sign;
   let current: Sign;
