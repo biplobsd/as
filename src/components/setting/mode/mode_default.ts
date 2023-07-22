@@ -1,7 +1,12 @@
+import { THEME_MODE_DEFAULT } from "src/utils/default";
 import { delay, saveToCloudUserSetting } from "src/utils/helper";
+import type { UserSetting } from "src/utils/schema";
 import {
+  isDarkThemeWritable,
+  numberPointWritable,
   numberRangeWritable,
   signWritable,
+  starWritable,
   storeIncreaseNumberAfterWritable,
   timeWritable,
 } from "src/utils/storage";
@@ -25,6 +30,21 @@ export const MODE_DEFAULT = {
     increaseNumber: 5,
   },
 };
+
+export const USER_SETTING_DEFAULT: UserSetting = {
+  ...MODE_DEFAULT.easy,
+  numberPoint: 0,
+  sign: "+",
+  themeMode: "dark",
+};
+
+export async function setDefaultUserSetting() {
+  modeWritable.set("Easy");
+  signWritable.set("+");
+  isDarkThemeWritable.set(THEME_MODE_DEFAULT);
+  starWritable.set(0);
+  numberPointWritable.set(0);
+}
 
 export async function setDefaultSetting() {
   modeWritable.set("Easy");

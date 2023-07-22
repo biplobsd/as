@@ -1,7 +1,10 @@
 <script lang="ts">
   import toast_ from "svelte-french-toast";
   export let toast: { id: string };
-  import { setDefaultSetting } from "../setting/mode/mode_default";
+  import {
+    setDefaultSetting,
+    setDefaultUserSetting,
+  } from "../setting/mode/mode_default";
   import {
     isDarkThemeWritable,
     numberPointWritable,
@@ -17,10 +20,7 @@
   <div class="flex justify-center w-full gap-2">
     <button
       on:click={async () => {
-        setDefaultSetting();
-        isDarkThemeWritable.set(THEME_MODE_DEFAULT);
-        starWritable.set(0);
-        numberPointWritable.set(0);
+        setDefaultUserSetting();
         await runtime.send({
           type: "statusBackground",
           status: {

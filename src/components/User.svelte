@@ -18,6 +18,7 @@
   import type { RMUser } from "src/utils/schema";
   import { leaderboardRMUser } from "src/utils/writable";
   import { delay, requestUserSetting, setUserSetting } from "src/utils/helper";
+  import { setDefaultUserSetting } from "./setting/mode/mode_default";
 
   let ready: boolean = false;
   let isRunning: boolean = false;
@@ -65,6 +66,7 @@
         case "logoutSuccessful":
           rmUser = null;
           isUserLoggedWritable.set(false);
+          setDefaultUserSetting();
           isRunning = false;
         default:
           return;
