@@ -17,6 +17,7 @@
   import { get } from "svelte/store";
   import type { RMUser } from "src/utils/schema";
   import { leaderboardRMUser } from "src/utils/writable";
+  import { delay, requestUserSetting, setUserSetting } from "src/utils/helper";
 
   let ready: boolean = false;
   let isRunning: boolean = false;
@@ -73,8 +74,12 @@
       isUserLoggedWritable.set(true);
       starWritable.set(rmUser.star);
       isRunning = false;
+      await delay(10);
+      await requestUserSetting();
     } else if (dataLocal.type === "dataOptionTop10User") {
       leaderboardRMUser.set(dataLocal.users);
+    } else if (dataLocal.type === "dataOptionUserSetting") {
+      setUserSetting(dataLocal.userSetting);
     }
   }
 

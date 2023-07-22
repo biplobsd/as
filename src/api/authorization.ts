@@ -1,3 +1,4 @@
+import { auth, db } from "src/utils/firebase";
 import log from "src/utils/logger";
 
 const manifest = chrome.runtime.getManifest();
@@ -16,22 +17,24 @@ export const apiUrl = {
 };
 
 export async function logout() {
-  const accessToken = await getAccessToken();
-  if (accessToken) {
-    let params = `?token=${accessToken}`;
-    const url = `${apiUrl.revoke}${params}`;
-    try {
+  try {
+    await auth.signOut();
+
+    const accessToken = await getAccessToken();
+    if (accessToken) {
+      let params = `?token=${accessToken}`;
+      const url = `${apiUrl.revoke}${params}`;
       await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-    } catch (e) {
-      log.error(e);
     }
+    await chrome.storage.local.clear();
+  } catch (error) {
+    log.error(error);
   }
-  await chrome.storage.local.clear();
 }
 
 const getExpirationDate = (dateFrom: Date, expireInMinutes: number): number => {

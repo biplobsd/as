@@ -12,6 +12,7 @@ const StatusCodeSchema = z.enum([
   "message",
   "user",
   "users",
+  "userSetting",
   "top10UserStart",
   "top10UserStop",
   "starToZero",
@@ -37,8 +38,8 @@ export const runtimeMessageSchema = z.discriminatedUnion("type", [
     status: StatusSchema,
   }),
   z.object({
-    type: z.enum(["dataBackgroundUserSettings", "dataOptionUserSettings"]),
-    userSettings: UserSettingSchema,
+    type: z.enum(["dataBackgroundUserSetting", "dataOptionUserSetting"]),
+    userSetting: UserSettingSchema,
     status: StatusSchema,
   }),
   z.object({
@@ -73,7 +74,7 @@ export const runtime: RuntimeModel = {
       if (
         this.isOptionsPage &&
         runtimeMessage.type !== "statusBackground" &&
-        runtimeMessage.type !== "dataBackgroundUserSettings"
+        runtimeMessage.type !== "dataBackgroundUserSetting"
       ) {
         const [tab] = await chrome.tabs.query({
           active: true,

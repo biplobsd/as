@@ -59,13 +59,22 @@ export function setUserSetting({
 }
 
 export async function saveToCloudUserSetting() {
-  const q = getUserSetting();
   await runtime.send({
-    type: "dataBackgroundUserSettings",
-    userSettings: q,
+    type: "dataBackgroundUserSetting",
+    userSetting: getUserSetting(),
     status: {
       code: "message",
       msg: "Update user setting",
+    },
+  });
+}
+
+export async function requestUserSetting() {
+  await runtime.send({
+    type: "statusBackground",
+    status: {
+      code: "userSetting",
+      msg: "Get user setting",
     },
   });
 }

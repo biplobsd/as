@@ -43,42 +43,42 @@ export async function writeUserData({
 }
 
 export function incrementStarServer() {
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      const updates = {};
+  const user = auth.currentUser;
 
-      // @ts-ignore
-      updates[`users/${user.uid}/star`] = increment(1);
+  if (user) {
+    const updates = {};
 
-      update(ref(db), updates);
-    }
-  });
+    // @ts-ignore
+    updates[`users/${user.uid}/star`] = increment(1);
+
+    update(ref(db), updates);
+  }
 }
 
 export function starToZero() {
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      const updates = {};
+  const user = auth.currentUser;
 
-      // @ts-ignore
-      updates[`users/${user.uid}/star`] = 0;
+  if (user) {
+    const updates = {};
 
-      update(ref(db), updates);
-    }
-  });
+    // @ts-ignore
+    updates[`users/${user.uid}/star`] = 0;
+
+    update(ref(db), updates);
+  }
 }
 
-export function updateUserSettings(userSetting: UserSetting) {
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      const updates = {};
+export function updateUserSetting(userSetting: UserSetting) {
+  const user = auth.currentUser;
 
-      // @ts-ignore
-      updates[`usersSetting/${user.uid}`] = userSetting;
+  if (user) {
+    const updates = {};
 
-      update(ref(db), updates);
-    }
-  });
+    // @ts-ignore
+    updates[`usersSetting/${user.uid}`] = userSetting;
+
+    update(ref(db), updates);
+  }
 }
 
 export async function setUserCredential(uc: UserCredential | null) {
@@ -100,6 +100,18 @@ export async function setUserCredential(uc: UserCredential | null) {
       return user;
     }
     return;
+  }
+}
+
+export async function getUserSetting() {
+  const user = auth.currentUser;
+
+  if (user) {
+    const snapshot = await get(child(ref(db), `usersSetting/${user.uid}`));
+
+    if (snapshot.exists()) {
+      return snapshot.val() as UserSetting;
+    }
   }
 }
 

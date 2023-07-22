@@ -7,11 +7,12 @@ import {
 } from "src/utils/communication";
 import { signInWithCredentialAccessToken } from "src/utils/firebase";
 import {
+  getUserSetting,
   incrementStarServer,
   onRMValueChangeListener,
   setUserCredential,
   starToZero,
-  updateUserSettings,
+  updateUserSetting,
 } from "src/utils/firebase_update";
 
 import log from "src/utils/logger";
@@ -198,13 +199,37 @@ export async function parseData(dataLocal: RuntimeMessage) {
           isWorking = false;
         }
         break;
+      case "userSetting":
+        try {
+          if (await checkIsWorking()) return;
+
+          console.log("get user setting now");
+
+          const userSetting = await getUserSetting();
+          console.log("us", userSetting);
+          if (userSetting) {
+            await runtime.send({
+              type: "dataOptionUserSetting",
+              userSetting: userSetting,
+              status: {
+                code: "userSetting",
+                msg: "User setting",
+              },
+            });
+          }
+        } catch (error) {
+          log.error(error);
+        } finally {
+          isWorking = false;
+        }
+        break;
       default:
         break;
     }
-  } else if (dataParsed.type === "dataBackgroundUserSettings") {
+  } else if (dataParsed.type === "dataBackgroundUserSetting") {
     try {
       if (await checkIsWorking()) return;
-      updateUserSettings(dataParsed.userSettings);
+      updateUserSetting(dataParsed.userSetting);
     } catch (error) {
       log.error(error);
     } finally {

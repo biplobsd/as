@@ -7,6 +7,16 @@
   import Timeout from "../setting/timeout/Timeout_Setting.svelte";
   import ResetSetting from "./reset_setting.svelte";
   import BackToFirst from "./back_to_first.svelte";
+  import { onMount } from "svelte";
+  import { requestUserSetting } from "src/utils/helper";
+  import { isUserLoggedWritable } from "src/utils/storage";
+  import { get } from "svelte/store";
+
+  onMount(async () => {
+    if (get(isUserLoggedWritable)) {
+      await requestUserSetting();
+    }
+  });
 </script>
 
 <div class="space-y-2">
