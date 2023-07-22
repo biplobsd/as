@@ -4,7 +4,7 @@
 
 ![logo](/src/assets/icons/icon128.png)
 
-(AS) is a browser extension that helps you practice simple addition and subtraction equations. It is like a quiz extension.
+(AS) is a browser extension that helps you practice simple addition and subtraction expression. It is like a quiz extension.
 
 ![preview_opz](https://github.com/biplobsd/as/assets/43641536/be8cfb52-bb45-4ce3-8855-59e2e5e1bd49)
 
