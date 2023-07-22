@@ -3,7 +3,7 @@
   import Home from "src/components/pages/Home.svelte";
   import About from "src/components/pages/About.svelte";
   import type { TabName } from "../utils/types";
-  import { slide, blur } from "svelte/transition";
+  import { slide } from "svelte/transition";
   import TabButton from "./Tab_Button.svelte";
   import Leaderboard from "./pages/Leaderboard.svelte";
 

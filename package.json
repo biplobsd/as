@@ -14,6 +14,7 @@
   "devDependencies": {
     "@crxjs/vite-plugin": "2.0.0-beta.18",
     "@macfja/svelte-persistent-store": "^2.3.2",
+    "@splidejs/svelte-splide": "^0.2.9",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@total-typescript/ts-reset": "^0.4.2",
     "@tsconfig/svelte": "5.0.0",
@@ -29,7 +30,6 @@
     "pino-pretty": "^10.0.0",
     "postcss": "^8.4.24",
     "svelte": "^4.0.1",
-    "svelte-carousel": "^1.0.25",
     "svelte-check": "3.4.4",
     "svelte-french-toast": "^1.1.0",
     "svelte-preprocess": "5.0.4",

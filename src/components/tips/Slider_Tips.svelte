@@ -1,5 +1,6 @@
 <script lang="ts">
   import Carousel from "svelte-carousel";
+  import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import type { TooltipItem } from "src/utils/interface";
   import keyboardUse from "src/assets/gifs/tooltips/keyboard_use.gif";
   import modeChange from "src/assets/gifs/tooltips/mode_change.gif";
@@ -25,14 +26,18 @@
   });
 </script>
 
-<Carousel
-  autoplay
-  arrows={false}
-  autoplayDuration={5000}
-  autoplayProgressVisible
-  pauseOnFocus
+<Splide
+  class="w-full h-48"
+  options={{
+    type: "loop",
+    autoplay: true,
+    arrows: false,
+  }}
+  aria-label="Tips"
 >
   {#each data as i}
-    <Item {...i} />
+    <SplideSlide>
+      <Item {...i} />
+    </SplideSlide>
   {/each}
-</Carousel>
+</Splide>
