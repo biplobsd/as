@@ -52,7 +52,7 @@ export function setUserSetting({
 }: UserSetting) {
   timeWritable.set(timeout);
   numberRangeWritable.set(numberRange);
-  increaseNumberAfterWritable.set(increaseNumber);
+  storeIncreaseNumberAfterWritable.set(increaseNumber);
   numberPointWritable.set(numberPoint);
   signWritable.set(sign);
   isDarkThemeWritable.set(themeMode);

@@ -4,6 +4,7 @@
   import { isDarkThemeWritable } from "src/utils/storage";
   import { onMount } from "svelte";
 
+  let mounted = false;
   let isLight = false;
   let themeMode = THEME_MODE_DEFAULT;
   const toggleThemeMode = (modeValue: string) =>
@@ -15,8 +16,9 @@
       themeMode = modeValue;
 
       document.documentElement.setAttribute("data-theme", modeValue);
-      await saveToCloudUserSetting();
+      if (mounted) await saveToCloudUserSetting();
     });
+    mounted = true;
   });
 </script>
 

@@ -203,10 +203,10 @@ export async function parseData(dataLocal: RuntimeMessage) {
         try {
           if (await checkIsWorking()) return;
 
-          console.log("get user setting now");
+          // console.log("get user setting now");
 
           const userSetting = await getUserSetting();
-          console.log("us", userSetting);
+          // console.log("us", userSetting);
           if (userSetting) {
             await runtime.send({
               type: "dataOptionUserSetting",

@@ -17,7 +17,7 @@ increaseNumberAfterWritable.subscribe(async (x) => {
     numberPointWritable.set(max);
     resetINA();
     await delay(10);
-    saveToCloudUserSetting();
+    await saveToCloudUserSetting();
   }
 });
 
