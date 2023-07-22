@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Carousel from "svelte-carousel";
   import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import type { TooltipItem } from "src/utils/interface";
   import keyboardUse from "src/assets/gifs/tooltips/keyboard_use.gif";

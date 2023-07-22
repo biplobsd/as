@@ -21,7 +21,4 @@ export default defineConfig({
       clientPort: 5173,
     },
   },
-  optimizeDeps: {
-    include: ["lodash.get", "lodash.isequal", "lodash.clonedeep"],
-  },
 });
