@@ -6,8 +6,9 @@
     numberRangeWritable,
     storeIncreaseNumberAfterWritable,
   } from "src/utils/storage";
-  import { MODE_DEFAULT, checkIsInMode } from "./mode_default";
+  import { checkIsInMode } from "./mode_default";
   import { modeWritable } from "src/utils/writable";
+  import { MODE_DEFAULT } from "src/utils/constants";
 
   onMount(() => {
     checkIsInMode();

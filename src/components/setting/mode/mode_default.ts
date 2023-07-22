@@ -1,6 +1,6 @@
+import { MODE_DEFAULT } from "src/utils/constants";
 import { THEME_MODE_DEFAULT } from "src/utils/default";
 import { delay, saveToCloudUserSetting } from "src/utils/helper";
-import type { UserSetting } from "src/utils/schema";
 import {
   isDarkThemeWritable,
   numberPointWritable,
@@ -12,31 +12,6 @@ import {
 } from "src/utils/storage";
 import { modeWritable } from "src/utils/writable";
 import { get } from "svelte/store";
-
-export const MODE_DEFAULT = {
-  easy: {
-    timeout: 30,
-    numberRange: 5,
-    increaseNumber: 50,
-  },
-  medium: {
-    timeout: 20,
-    numberRange: 20,
-    increaseNumber: 20,
-  },
-  hard: {
-    timeout: 5,
-    numberRange: 100,
-    increaseNumber: 5,
-  },
-};
-
-export const USER_SETTING_DEFAULT: UserSetting = {
-  ...MODE_DEFAULT.easy,
-  numberPoint: 0,
-  sign: "+",
-  themeMode: "dark",
-};
 
 export async function setDefaultUserSetting() {
   modeWritable.set("Easy");
