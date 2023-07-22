@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "2.0.0-beta.18",
-    "@macfja/svelte-persistent-store": "^2.3.1",
+    "@macfja/svelte-persistent-store": "^2.3.2",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@total-typescript/ts-reset": "^0.4.2",
     "@tsconfig/svelte": "5.0.0",
