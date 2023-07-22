@@ -3,6 +3,7 @@
   import type { TooltipItem } from "src/utils/interface";
   import keyboardUse from "src/assets/gifs/tooltips/keyboard_use.gif";
   import modeChange from "src/assets/gifs/tooltips/mode_change.gif";
+  import bmc from "src/assets/pngs/bmc-logo-no-background.png";
   import { shuffle } from "fast-shuffle";
   import Item from "./Item.svelte";
   import { onMount } from "svelte";
@@ -17,6 +18,11 @@
       text: "Switch modes by accessing the settings tab.",
       img: modeChange,
       imgAlt: "Mode Change",
+    },
+    {
+      text: "If you enjoy this extension, consider buying me a coffee to support its maintenance.",
+      img: bmc,
+      imgAlt: "Buy me a coffee icon",
     },
   ];
 
