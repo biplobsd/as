@@ -106,16 +106,17 @@
   }
 
   onMount(async () => {
-    if (get(isUserLoggedWritable)) {
-      await getRMUser();
-    }
-
     runtime.isOptionsPage = true;
     storageRemoveListener = runtime.addListener(parseData);
 
     isDarkThemeWritable.subscribe((modeValue) => {
       isLight = modeValue === "light";
     });
+
+    await delay(10);
+    if (get(isUserLoggedWritable)) {
+      await getRMUser();
+    }
   });
 
   onDestroy(async () => {
