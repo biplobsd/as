@@ -94,7 +94,10 @@
     ];
 
     while (true) {
-      const optionAns = randomIntFromInterval(min, max);
+      const optionAns = randomIntFromInterval(
+        ans - randomIntFromInterval(0, 10),
+        ans + randomIntFromInterval(0, 10)
+      );
       if (optionAns === ans || options.some((x) => x.number === optionAns)) {
         continue;
       }
