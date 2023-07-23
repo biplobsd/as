@@ -1,6 +1,6 @@
 # [In progress: Not ready for publish yet]
 
-# Addition and Subscription
+# Addition and Subtraction
 
 ![logo](/src/assets/icons/icon128.png)
 
@@ -23,11 +23,10 @@ Suppose you want to increase your mouse or keyboard interaction. Also, you want 
 ## Installation
 
 | Edge Add-ons | Chrome Web Store |
-| ----------- | ----------- |
-| Coming soon | Coming soon |
+| ------------ | ---------------- |
+| Coming soon  | Coming soon      |
 
 Or get the built zip from the [release](https://github.com/biplobsd/as/releases/latest) tab. Then follow the instructions in the [Load unpacked extensions](#load-unpacked-extensions) section. The **_/dist_** folder should be considered as the unpacked zip files.
-
 
 ## Usages
 
@@ -48,24 +47,26 @@ If you continue (easy mode 50 stars), you will have your expression numbers incr
 Below are the presets for each mode.
 | Action | Easy | Medium | Hard |
 | ----------- | ----------- | ----------- | ----------- |
-| Timeout | 30s | 20s | 5s |
-| Number Range | 5 | 20 | 100 |
-| Increase number after N star | 50 | 20 | 5 |
+| Timeout | 20s | 10s | 5s |
+| Number Range | 5 | 10 | 30 |
+| Increase number after N star | 30 | 20 | 5 |
 
 - Mode in details
+
   > Timeout - Countdown to choose your options within this time.
-  
+
   > Number Range - Numbers between the minimum and maximum values. For example, for a number range of 5, if your current score is 0, then your minimum is 0 and maximum is 5.
-  
+
   > Increase number after N star - After correctly answering 50 expression (in Easy mode), your base score will increase to the maximum value.
-  
+
   > Only (+ or -) - You can choose between only addition for (+), only subtraction for (-), or random for (+) or (-) expression.
 
 - Reset
+
   > Setting - Resets only the settings. This action will not remove your star values.
-  
+
   > Back to First - Resets both the settings and star count to 0. This will also update the leaderboard page.
-  
+
 ### Dark or Light theme
 
 Switch between Dark or Light themes by simply pressing the icon in the top right corner.

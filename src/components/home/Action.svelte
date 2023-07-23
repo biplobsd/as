@@ -7,14 +7,13 @@
   import { increaseNumberAfterWritable } from "src/utils/writable";
   import { slide } from "svelte/transition";
   import { runtime } from "src/utils/communication";
-  import { DEFAULT_REDO_FAILED_COUNT } from "src/utils/constants";
 
   let showAns: boolean = false;
   let showAnsBtnIndex: number;
 
   export let stop: boolean;
   export let currentQuestion: QuestionPack | null = null;
-  export let redoFailedCount: number;
+  export let startFun: () => void;
   export let warningScreen: boolean;
 
   async function checkAns(option: Option, index: number) {
@@ -22,9 +21,9 @@
     showAnsBtnIndex = index;
     showAns = true;
     await delay(100);
+    showAns = false;
     stop = true;
     if (option.correct) {
-      redoFailedCount = DEFAULT_REDO_FAILED_COUNT;
       starWritable.update((x) => x + 1);
       increaseNumberAfterWritable.update((x) => x - 1);
       await runtime.send({
@@ -34,10 +33,10 @@
           msg: "Add star count",
         },
       });
+      startFun();
     } else {
-      redoFailedCount -= 1;
+      warningScreen = true;
     }
-    showAns = false;
   }
 
   async function onKeyDown(

@@ -1,23 +1,22 @@
 import type { UserSetting } from "./schema";
 
-export const APP_NAME = "Addition and Subscription";
+export const APP_NAME = "Addition and Subtraction";
 export const VERSION = "v1.0";
 export const REPO_URL = "https://github.com/biplobsd/as";
-export const DEFAULT_REDO_FAILED_COUNT = 10;
 export const MODE_DEFAULT = {
   easy: {
-    timeout: 30,
+    timeout: 20,
     numberRange: 5,
-    increaseNumber: 50,
+    increaseNumber: 30,
   },
   medium: {
-    timeout: 20,
-    numberRange: 20,
+    timeout: 10,
+    numberRange: 10,
     increaseNumber: 20,
   },
   hard: {
     timeout: 5,
-    numberRange: 100,
+    numberRange: 30,
     increaseNumber: 5,
   },
 };
