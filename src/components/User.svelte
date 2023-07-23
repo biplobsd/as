@@ -8,11 +8,7 @@
   import log from "src/utils/logger";
   import { onDestroy, onMount } from "svelte";
 
-  import {
-    isDarkThemeWritable,
-    isUserLoggedWritable,
-    starWritable,
-  } from "src/utils/storage";
+  import { isUserLoggedWritable, starWritable } from "src/utils/storage";
 
   import { get } from "svelte/store";
   import type { RMUser } from "src/utils/schema";
@@ -20,11 +16,9 @@
   import { delay, requestUserSetting, setUserSetting } from "src/utils/helper";
   import { setDefaultUserSetting } from "./setting/mode/mode_default";
 
-  let ready: boolean = false;
   let isRunning: boolean = false;
   let storageRemoveListener: () => void;
   let rmUser: RMUser | null;
-  let isLight = false;
 
   let lastStatusData: RuntimeMessage | undefined = undefined;
 
@@ -52,16 +46,11 @@
         case "loading":
           isRunning = true;
           return;
-        case "ready":
-          ready = true;
-          return;
         case "accept":
-          ready = true;
           isRunning = false;
           return;
         case "error":
           isRunning = false;
-          ready = true;
           return;
         case "logoutSuccessful":
           rmUser = null;
@@ -108,10 +97,6 @@
   onMount(async () => {
     runtime.isOptionsPage = true;
     storageRemoveListener = runtime.addListener(parseData);
-
-    isDarkThemeWritable.subscribe((modeValue) => {
-      isLight = modeValue === "light";
-    });
 
     await delay(10);
     if (get(isUserLoggedWritable)) {
