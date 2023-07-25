@@ -7,13 +7,14 @@
   import { increaseNumberAfterWritable } from "src/utils/writable";
   import { slide } from "svelte/transition";
   import { runtime } from "src/utils/communication";
+  import ArrowPath from "../icons/Arrow_Path.svelte";
 
   let showAns: boolean = false;
   let showAnsBtnIndex: number;
 
   export let stop: boolean;
   export let currentQuestion: QuestionPack | null = null;
-  export let startFun: () => void;
+  export let startFun: () => Promise<void>;
   export let warningScreen: boolean;
 
   async function checkAns(option: Option, index: number) {
@@ -33,7 +34,7 @@
           msg: "Add star count",
         },
       });
-      startFun();
+      await startFun();
     } else {
       warningScreen = true;
     }
@@ -73,46 +74,55 @@
   }
 </script>
 
-{#if currentQuestion}
-  <div class="flex flex-col gap-1">
-    <div class="text-5xl text-center my-10 font-semibold">
-      {#key currentQuestion.text}
-        <p transition:slide>
-          {currentQuestion.text}
-        </p>
-      {/key}
+<div class="h-60">
+  {#if currentQuestion}
+    <div class="flex flex-col gap-1">
+      <div class="text-5xl text-center my-10 font-semibold">
+        {#key currentQuestion.text}
+          <p transition:slide>
+            {currentQuestion.text}
+          </p>
+        {/key}
+      </div>
+      <div
+        role="button"
+        tabindex="0"
+        on:keydown={onKeyDown}
+        aria-label="Press option by keyboard"
+        class="grid-cols-2 grid gap-2"
+      >
+        {#each currentQuestion.options as option, index}
+          <button
+            bind:this={option.btn}
+            on:click={() => checkAns(option, index)}
+            class={clsx(
+              "btn btn-md rounded-md w-full !py-0 !my-0",
+              showAns && showAnsBtnIndex === index
+                ? option.correct
+                  ? "focus:btn-success"
+                  : "focus:btn-error"
+                : ""
+            )}
+          >
+            <div>
+              {#key option.number}
+                <div class="text-3xl" transition:slide={{ duration: 100 }}>
+                  {option.number}
+                </div>
+              {/key}
+            </div>
+          </button>
+        {/each}
+      </div>
     </div>
-    <div
-      role="button"
-      tabindex="0"
-      on:keydown={onKeyDown}
-      aria-label="Press option by keyboard"
-      class="grid-cols-2 grid gap-2"
-    >
-      {#each currentQuestion.options as option, index}
-        <button
-          bind:this={option.btn}
-          on:click={() => checkAns(option, index)}
-          class={clsx(
-            "btn btn-md rounded-md w-full !py-0 !my-0",
-            showAns && showAnsBtnIndex === index
-              ? option.correct
-                ? "focus:btn-success"
-                : "focus:btn-error"
-              : ""
-          )}
-        >
-          <div>
-            {#key option.number}
-              <div class="text-3xl" transition:slide={{ duration: 100 }}>
-                {option.number}
-              </div>
-            {/key}
-          </div>
-        </button>
-      {/each}
+  {:else}
+    <div class="flex justify-center h-full items-center flex-col">
+      <div class="mb-2">
+        <div class="animate-spin">
+          <ArrowPath h="h-10" w="w-10" />
+        </div>
+      </div>
+      Please wait question is generating...
     </div>
-  </div>
-{:else}
-  <div>Please wait question is generating...</div>
-{/if}
+  {/if}
+</div>

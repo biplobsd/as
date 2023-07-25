@@ -6,15 +6,21 @@
     getMinMax,
     randomIntFromInterval,
     resetINA,
+    saveToCloudUserSetting,
   } from "src/utils/helper";
   import { shuffle } from "fast-shuffle";
   import type { QuestionPack } from "src/utils/interface";
   import { onMount } from "svelte";
   import { blur } from "svelte/transition";
-  import { signWritable, timeWritable } from "src/utils/storage";
+  import {
+    numberPointWritable,
+    signWritable,
+    timeWritable,
+  } from "src/utils/storage";
   import { get } from "svelte/store";
   import ArrowPath from "../icons/Arrow_Path.svelte";
   import SliderTips from "../tips/Slider_Tips.svelte";
+  import toast from "svelte-french-toast";
 
   let stop: boolean = false;
   let timeout: number;
@@ -39,33 +45,48 @@
     stop = false;
   }
 
-  function questionInfinity(): QuestionPack {
-    const { min, max } = getMinMax();
-    const number1 = randomIntFromInterval(min, max);
-    const number2 = randomIntFromInterval(min, max);
+  async function questionInfinity(): Promise<QuestionPack> {
     const sign = get(signWritable);
-
     let ans: number;
     let signText: string;
+    let number1: number;
+    let number2: number;
 
-    switch (sign) {
-      case "+":
-        ans = number1 + number2;
-        signText = sign;
-        break;
-      case "-":
-        ans = number1 - number2;
-        signText = sign;
-        break;
-      case "random":
-        if (Math.random() > 0.5) {
+    while (true) {
+      const { min, max } = getMinMax();
+      number1 = randomIntFromInterval(min, max);
+      number2 = randomIntFromInterval(min, max);
+
+      switch (sign) {
+        case "+":
           ans = number1 + number2;
-          signText = "+";
-        } else {
+          signText = sign;
+          break;
+        case "-":
           ans = number1 - number2;
-          signText = "-";
-        }
-        break;
+          signText = sign;
+          break;
+        case "random":
+          if (Math.random() > 0.5) {
+            ans = number1 + number2;
+            signText = "+";
+          } else {
+            ans = number1 - number2;
+            signText = "-";
+          }
+          break;
+      }
+
+      if (ans.toString().length >= 4) {
+        numberPointWritable.set(0);
+        await delay(10);
+        await saveToCloudUserSetting();
+        toast(
+          "Congratulations! 🎉 4-digit numbers are not supported yet. Resetting the number point to 0."
+        );
+        continue;
+      }
+      break;
     }
 
     const questionString = number1 + signText + number2;
@@ -100,19 +121,19 @@
     };
   }
 
-  function start() {
-    currentQuestion = questionInfinity();
+  async function start() {
+    currentQuestion = await questionInfinity();
     timeout = get(timeWritable);
     countdown();
   }
 
-  function startPress() {
+  async function startPress() {
     warningScreen = false;
-    start();
+    await start();
   }
 
-  onMount(() => {
-    start();
+  onMount(async () => {
+    await start();
     resetINA();
   });
 </script>

@@ -6,7 +6,7 @@
   import { get } from "svelte/store";
   import { slide } from "svelte/transition";
   let localStar: number = 0;
-  export let timeout: number;
+  export let timeout: number = 0;
 
   onMount(async () => {
     starWritable.subscribe((star) => {
