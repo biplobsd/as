@@ -1,5 +1,3 @@
-# [In progress: Not ready for publish yet]
-
 # Addition and Subtraction
 
 ![logo](/src/assets/icons/icon128.png)
@@ -7,7 +5,6 @@
 (AS) is a browser extension that helps you practice simple addition and subtraction expression. It is like a quiz extension.
 
 ![preview_opz](https://github.com/biplobsd/as/assets/43641536/e73310ff-6693-4ba6-8bbd-a9052f6e328f)
-
 
 ## Quick tutorial in 60 second (Youtube #Shorts)
 
