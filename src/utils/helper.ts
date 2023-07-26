@@ -6,6 +6,7 @@ import {
   signWritable,
   storeIncreaseNumberAfterWritable,
   timeWritable,
+  typeWritable,
 } from "./storage";
 import { increaseNumberAfterWritable } from "./writable";
 import type { UserSetting } from "./schema";
@@ -39,6 +40,7 @@ export function getUserSetting(): UserSetting {
     numberPoint: get(numberPointWritable),
     sign: get(signWritable),
     themeMode: get(isDarkThemeWritable),
+    type: get(typeWritable),
   };
 }
 
@@ -49,6 +51,7 @@ export function setUserSetting({
   numberRange,
   sign,
   themeMode,
+  type,
 }: UserSetting) {
   timeWritable.set(timeout);
   numberRangeWritable.set(numberRange);
@@ -56,6 +59,7 @@ export function setUserSetting({
   numberPointWritable.set(numberPoint);
   signWritable.set(sign);
   isDarkThemeWritable.set(themeMode);
+  typeWritable.set(type);
 }
 
 export async function saveToCloudUserSetting() {

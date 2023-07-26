@@ -11,6 +11,7 @@
   import { requestUserSetting } from "src/utils/helper";
   import { isUserLoggedWritable } from "src/utils/storage";
   import { get } from "svelte/store";
+  import OptionType from "../setting/option_type/Option_Type.svelte";
 
   onMount(async () => {
     if (get(isUserLoggedWritable)) {
@@ -25,6 +26,7 @@
   <NumberRange />
   <IncreaseNumber />
   <Sign />
+  <OptionType />
 
   <div>
     <div class="font-bold text-sm mb-1">Reset</div>

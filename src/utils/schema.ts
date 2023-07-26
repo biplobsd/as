@@ -31,6 +31,7 @@ export const UserSettingSchema = z.object({
   increaseNumber: z.number(),
   numberPoint: z.number(),
   sign: SignSchema,
+  type: z.boolean(),
   themeMode: ThemeSchema,
 });
 

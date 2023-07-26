@@ -9,6 +9,7 @@ import {
   STAR_KEY,
   THEME_MODE_KEY,
   TIMEOUT_KEY,
+  TYPE_KEY,
 } from "./storage_key";
 import type { Sign, Theme } from "./schema";
 import { USER_SETTING_DEFAULT as us } from "src/utils/constants";
@@ -52,6 +53,10 @@ export const numberRangeWritable: Writable<number> = writable(
 
 // Sign
 export const signWritable: Writable<Sign> = writable(SIGN_KEY, us.sign);
+// //
+
+// Type
+export const typeWritable: Writable<boolean> = writable(TYPE_KEY, us.type);
 // //
 
 // Mode

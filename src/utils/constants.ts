@@ -26,4 +26,5 @@ export const USER_SETTING_DEFAULT: UserSetting = {
   numberPoint: 0,
   sign: "+",
   themeMode: "dark",
+  type: false,
 };
