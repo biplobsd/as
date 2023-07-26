@@ -9,21 +9,26 @@ import {
   starWritable,
   storeIncreaseNumberAfterWritable,
   timeWritable,
+  typeWritable,
 } from "src/utils/storage";
 import { modeWritable } from "src/utils/writable";
 import { get } from "svelte/store";
 
-export async function setDefaultUserSetting() {
+export function setOptionDefault() {
   modeWritable.set("Easy");
   signWritable.set("+");
+  typeWritable.set(false);
+}
+
+export async function setDefaultUserSetting() {
+  setOptionDefault();
   isDarkThemeWritable.set(THEME_MODE_DEFAULT);
   starWritable.set(0);
   numberPointWritable.set(0);
 }
 
 export async function setDefaultSetting() {
-  modeWritable.set("Easy");
-  signWritable.set("+");
+  setOptionDefault();
   await delay(10);
   await saveToCloudUserSetting();
 }
