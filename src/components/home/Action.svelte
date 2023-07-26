@@ -21,9 +21,9 @@
     if (showAns || warningScreen) return;
     showAnsBtnIndex = index;
     showAns = true;
+    stop = true;
     await delay(100);
     showAns = false;
-    stop = true;
     if (option.correct) {
       starWritable.update((x) => x + 1);
       increaseNumberAfterWritable.update((x) => x - 1);
