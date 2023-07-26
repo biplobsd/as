@@ -1,7 +1,7 @@
 import type { UserSetting } from "./schema";
 
 export const APP_NAME = "Addition and Subtraction";
-export const VERSION = "v1.1";
+export const VERSION = "v1.2";
 export const REPO_URL = "https://github.com/biplobsd/as";
 export const MODE_DEFAULT = {
   easy: {
