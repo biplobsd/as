@@ -22,7 +22,7 @@ Suppose you want to increase your mouse or keyboard interaction. Also, you want 
 
 | Edge Add-ons | Chrome Web Store |
 | ------------ | ---------------- |
-| Coming soon  | Coming soon      |
+| Coming soon  | <a href="https://chrome.google.com/webstore/detail/gcfbgldheflkffckpodpmkjlkbapmfnc"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/HRs9MPufa1J1h5glNhut.png" alt="Get AS from Chrome Web Store" width="224px"></a> |
 
 Or get the built zip from the [release](https://github.com/biplobsd/as/releases/latest) tab. Then follow the instructions in the [Load unpacked extensions](#load-unpacked-extensions) section. The **_/dist_** folder should be considered as the unpacked zip files.
 
